@@ -771,7 +771,7 @@ DEX不收取任何交易费用。从通过原子交换执行的交易中收取�
 | sig       || string || client hex-encoded signature of the serialized order data. serialization described below
 |}
 
-'''响应参数s'''
+'''响应参数'''
 
 {|
 ! 领域    !! 类型   !! 描述
@@ -924,7 +924,7 @@ DEX不收取任何交易费用。从通过原子交换执行的交易中收取�
 | matchid    || 8  || the ID assigned to this match
 |}
 
-==交易暂停n==
+==交易暂停==
 
 在许多情况下，服务器可以有意或无意地暂停操作。在交易暂停期间，不一定要撤销常设限价令。
 
