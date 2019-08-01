@@ -21,24 +21,21 @@ __TOC__
 市面上已经出现的几个DEX项目是通过用区块链或代币映射作为方案，并且它们已经取得了不同程度的成功。当他们名义上删除受信任的第三方（TTP）时，他们会插入自己的产品作为捕获交易费用的手段，从而用新的平台费用代替TTP费用。收取交易费用的简单行为可以作为集中于特定解决方案的动机，这与开放式的交换系统背道而驰。虽然链或token用于移除TTP，但它也会产生订单匹配的挑战。
 
 本文档中描述的DEX基于原子交换[https://github.com/decred/atomicswap &#91;3&#93;]，由客户签名和传输。因此，资金交换是无信任和安全的。DEX的目的是促进这种点对点交易，同时抑制操纵或滥用交易模式，并利用交易者和运营商难以进行游戏的独立可验证的订单匹配算法。
-虽然交易完全没有信任，但我们采取措施阻止恶意客户阻碍正常的交易活动。注册客户受[[#社区-行为|社区行为规则]]的约束，违反这些 规则通常会导致失去交易特权。严重违规可能导致永久禁止，在这种情况下，受影响的用户必须支付另外的注册费才能继续使用DEX。
+虽然交易完全没有信任，但我们采取措施阻止恶意客户阻碍正常的交易活动。注册客户受[[#社区-行为|社区行为规则]]的约束，违反这些规则通常会导致失去交易特权。严重违规可能导致永久禁止，在这种情况下，受影响的用户必须支付另外的注册费才能继续使用DEX。
 
-The following list of non-negotiable, fundamental, DEX properties served as a
-basis for design.
+以下设计为此DEX构建的基础：
 
-# Non-custodial. Assets must be traded directly between clients, without the exchange being in control of assets at any time.
+# 去中心。资产必须在用户之间直接交易并且提供撮合交易的服务器在任何情况下都无法控制资产。
 
-# Intermediary-free. Trades must be executed in a secure and trustless manner.
+# 无中介。交易以安全和去信任的方式执行。
 
-# Resistant to malicious or manipulative trading. Deliberately disruptive behavior should be disincentivized, and volume manipulation mitigated by pseudo-random epoch-based order matching.
+# 抵制恶意交易和拒绝交易操纵。故意破坏性行为应被禁止，并且通过基于时间伪随机匹配逻辑来拒绝交易操纵。
 
-The remainder of this document details the design of the proposed DEX.
-It is intended as a first resource when implementing servers and clients.
-Continuing client-server interoperability will likely depend on subtle aspects
-of the specification laid out in this document, especially the following
-critical sections.
+本文档的其余部分详细介绍了关于DEX的设计。它是实现服务器和客户机时的第一个资源。保持在线的客户机-服务器互操作性可能取决于一些细节，尤其是以下关键部分。
 
-'''[[#Communication_Protocols|Communication Protocols]]''' describes the
+'''[[#通信_协议|通信协议]]''' 描述了用于DEX API的消息传递协议和通信层技术。
+
+'''[[#通信_协议|通信协议]]''' describes the
 messaging protocols and communication layer technologies that are to be used in
 for the DEX API.
 
