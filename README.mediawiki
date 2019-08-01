@@ -1,14 +1,12 @@
 =Decred DEX=
 
-This is the repository for the Decred Distributed Exchange (DEX), for which this
-document provides the '''DRAFT''' specification.
+这里是Decred Distributed Exchange (DEX)的'''DRAFT''' 规范性文档
 
 __TOC__
 
-==Abstract==
+==概述==
 
-We propose here a decentralized, non-custodial, trustless, and intermediary-free
-cryptocurrency exchange platform.
+我们（decred）在这里提出一个去中心化的、非监管的、去信任的，无中介的加密货币交换（交易）系统。
 
 The primary service provided by the decentralized exchange (DEX) is to match
 clients who would like to trade an asset of one type for an asset of another
