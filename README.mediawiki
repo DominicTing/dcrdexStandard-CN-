@@ -1550,6 +1550,7 @@ See also [[#Exchange_Variables|Exchange Variables]].
 &#91;5&#93; [https://tools.ietf.org/html/rfc8446 Transport Layer Security 1.3]
 
 &#91;6&#93; [https://www.jsonrpc.org/specification JSON-RPC 2.0 Specification]
-**感谢
-翻译：
-原文[链接](https://github.com/decred/dcrdex/blob/master/README.mediawiki)
+
+*感谢
+翻译：Dominic
+原文请访问decred-dcrdex查看
