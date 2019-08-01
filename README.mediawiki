@@ -10,19 +10,11 @@ __TOC__
 
 去中心化交换（DEX）提供的主要服务是用户将一种数字资产交换为另一种。通过去信任的原子交换工具，促使各区块链资产能够安全进行交换。
 
-Trades are facilitated by a trustless atomic swap negotiation process carried
-out with all the cryptographic security guarantees of the respective blockchains.
+提供定制的订单匹配逻辑以消除高频交易（HFT）算法及其它以机器人驱动的策略交易对于正常交易用户的剥削。消除单笔交易费（交易所常见0.2%）。
 
-A custom order matching procedure is offered to mitigate common abusive trading
-patterns associated with high-frequency trading (HFT) algorithms and other
-bot-driven trading.
-Elimination of per-trade fees disincentivizes deceptive bookkeeping practices
-commonly observed in centralized exchanges.
+为了鼓励开放和主动开发，提供了关键协议组件的描述和完整的客户端 - 服务器API定义。
 
-To encourage open and active development, descriptions of critical protocol
-components and a full client-server API definition are provided.
-
-==Introduction==
+==介绍==
 
 Existing cryptocurrency exchange platforms fall into 4 overlapping categories:
 custodial corporate entities, services, tokens, and blockchains.
@@ -1558,3 +1550,6 @@ See also [[#Exchange_Variables|Exchange Variables]].
 &#91;5&#93; [https://tools.ietf.org/html/rfc8446 Transport Layer Security 1.3]
 
 &#91;6&#93; [https://www.jsonrpc.org/specification JSON-RPC 2.0 Specification]
+**感谢
+翻译：
+原文[链接](https://github.com/decred/dcrdex/blob/master/README.mediawiki)
