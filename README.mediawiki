@@ -1113,4 +1113,4 @@ DEX的运作需要非常少量的行政人员。客户将期望近乎完美的�
 
 翻译：Dominic
 
-原文请访问decred-dcrdex
+&#91;6&#93; [https://github.com/decred/dcrdex/blob/master/README.mediawiki#table-of-contents 原文请访问]
