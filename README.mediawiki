@@ -18,17 +18,7 @@ __TOC__
 
 现有的加密货币交换平台（交易所）分为4个类别：托管公司实体类、服务类、token类和具有交换功能的中介链。绝大多数加密货币交易目前通过集中的监管交易进行。由于这些交易所的交易是在链外进行，因此它们通常会立即结算，以便为进一步交易提供资金。这是一个很好的功能，但它实际上使得交易市场将成为HFT和算法交易者的目标，这可能是不可预测和恶意的。此外，此类交易所通过收取交易费来赚取收入。这种模式为交易所创造了激励，通过洗牌交易人为地增加交易量&#91;1&#93;。据一项研究估计，超过95％的报告交换量是伪造的[https://www.sec.gov/comments/sr-nysearca-2019-01/srnysearca201901-5164833-183434.pdf &#91;2&#93;].
 
-Several DEX projects have been created to address some of these issues by
-replacing the exchange with a blockchain or a token, and they have met with
-varying degrees of success.
-While they remove the trusted third party (TTP), they insert their own products
-as a means to capture the trading fees, which replaces the TTP friction with a
-new platform friction.
-The simple act of collecting trading fees serves to act as an incentive to
-centralize on a given solution, which runs counter to a system of open voluntary
-exchange.
-While a chain or token serves to remove the TTP, it also creates challenges with
-order matching, which typically occurs via the intermediate chain or token.
+市面上已经出现的几个DEX项目是通过用区块链或代币映射作为方案，并且它们已经取得了不同程度的成功。当他们名义上删除受信任的第三方（TTP）时，他们会插入自己的产品作为捕获交易费用的手段，从而用新的平台费用代替TTP费用。收取交易费用的简单行为可以作为集中于特定解决方案的动机，这与开放式的交换系统背道而驰。虽然链或token用于移除TTP，但它也会产生订单匹配的挑战。
 
 The DEX described in this document is based on atomic swaps [https://github.com/decred/atomicswap &#91;3&#93;], signed and
 transmitted by the clients. Thus, the exchange of funds is trustless and secure.
