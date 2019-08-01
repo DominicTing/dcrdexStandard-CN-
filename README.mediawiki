@@ -218,36 +218,22 @@ DEX不收取任何交易费用。从通过原子交换执行的交易中收取�
 
 ===基于公钥基础设施（PKI）密钥对的身份===
 
-The server and the clients are identified and authenticated using public keys,
-with matching private keys used to sign and authorize orders and other messages.
-Establishing client identity with public keys keeps the notion of client
-identity to a minimum, while providing a number of other security benefits
-throughout the order placement and execution processes.
+使用公钥识别和验证服务器和客户端，使用匹配的私钥来签署和授权订单和其他消息。使用公钥建立客户端身份可以将客户身份的概念保持在最低限度，同时在整个订单放置和执行过程中提供许多其他安全优势。
 
-All data submitted to the exchange server from a client must be signed with the
-client's private key and authenticated by the server using the corresponding
-public key, so using client public keys directly for identity purposes is a
-natural simplification that obviates the need for client user names and
-passwords.
+从客户端提交给撮合交易服务器的所有数据必须使用客户端的私钥进行签名，并由服务器使用相应的公钥进行身份验证，因此直接使用客户端公钥进行身份验证是一种自然的简化，可以避免客户端用户名的需要和密码。
 
-Further, since Politeia, Decred's governance platform, also employs PKI, the
-same identities may be used on both services to facilitate time-stamping
-exchange data via Politeia. For example, given common identities between the DEX
-and Politeia, anchoring data related to DEX client and server conduct on the
-Decred blockchain may be useful for establishing a reputation system.
+此外，由于decred的链下治理平台Politeia也使用PKI，因此可以在两种服务上使用相同的身份，以便通过Politeia为交换数据添加时间戳。例如，给定DEX和Politeia之间的共同身份，在Decred区块链上锚定与DEX客户端和服务器行为相关的数据可能对建立信用系统很有用。
 
 ===区块链交互===
 
-'''Clients''' need wallets that support atomic swaps and the ability to
-broadcast transactions to each of the blockchain networks involved in
-[[#Atomic_Settlement|the swap]].
+'''用户'''需要支持原子交换的钱包以及向[[#交换_中|交换]]涉及的每个区块链网络广播交易的能力 。
 
-'''DEX operators''' need access to trusted full nodes for each of the
-assets supported.
-While operation via a surrogate blockchain data service such as a block explorer
-is potentially feasible, it would entail significant security risks.
-Initial development will require a direct connection to full nodes of each
-asset's blockchain.
+'''DEX运营商'''需要访问受支持的每个区块链项目的可信完整节点。虽然通过代理区块链数据服务（例如块浏览器）进行操作是可行的，但这会带来很大的安全风险。初始开发需要直接连接到每个区块链项目的完整节点。
+
+通过实现特定的Go[https://golang.org/ Go]接口来添加对资产的支持 。导出和编译接口-buildmode=plugin以启用交换运营商的动态导入。操作员将决定通过配置文件导入哪些插件。由于预期的接口在初始实现期间会发生很大变化，因此接口结构的细节将在稍后发布。
+
+除了将在DEX开发的初始阶段实施的Decred和Bitcoin之外，预计开发社区将发布他们自己经过适当审查的插件。
+
 
 Adding support for an asset is accomplished by implementing a particular
 [https://golang.org/ Go] interface.
