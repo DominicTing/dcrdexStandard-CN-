@@ -2,7 +2,7 @@
 
 这里是Decred Distributed Exchange (DEX)的'''DRAFT''' 规范性文档
 
-__TOC__
+__目录__
 
 ==概述==
 
