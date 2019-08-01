@@ -35,52 +35,25 @@ __TOC__
 
 '''[[#通信_协议|通信协议]]''' 描述了用于DEX API的消息传递协议和通信层技术。
 
-'''[[#通信_协议|通信协议]]''' describes the
-messaging protocols and communication layer technologies that are to be used in
-for the DEX API.
+'''[[#分布式_交换_设计_基础知识|分布式交换设计基础知识]]'''描述了促进具有上述特征的交换服务的显着设计方面。
 
-'''[[#Distributed_Exchange_Design_Fundamentals|Distributed Exchange Design Fundamentals]]'''
-describes the notable design aspects that facilitate an exchange service with
-the features described above.
+'''[[#用户_订单_管理|用户订单管理]]'''详细说明了同步订单簿和下订单所需的不同订单类型和客户/服务器工作流程。
 
-'''[[#Client_Order_Management|Client Order Management]]''' details the different
-order types and the client/server workflows required to synchronize the order
-book and place orders.
+'''[[#原子_结算|原子结算]]'''通过几个示例介绍了结算过程，以提供高级概述。
 
-'''[[#Atomic_Settlement|Atomic Settlement]]''' walks through the settlement
-process with a couple of examples to provide a high-level overview.
+'''[[#社区_行为|社区行为]]'''描述了与DEX交互的客户必须遵守的规则体系。
 
-'''[[#Community_Conduct|Community Conduct]]''' describes the system of rules
-to which clients interacting with the DEX must adhere.
-
-==Communication Protocols==
+==通信协议==
 
 ===WebSockets===
 
-Trustless negotiation of trades requires considerable messaging.
-Transaction details must be reported and relayed at appropriate times, sometimes
-with substantial delays between subsequent actions.
-Match notification via HTTP polling or other request interval-based methods are
-thus not suitable for the DEX system.
-Persistent, full-duplex communication is critical to minimizing communication
-latencies and wasted bandwidth.
-Websockets ([https://tools.ietf.org/html/rfc6455 &#91;4&#93;]) are chosen as the default and preferred communications protocol for
-the DEX exchange API.
-In addition to fulfilling the aforementioned needs, Websockets are now a
-well-established technology with client software available for integration in
-virtually all popular programming languages.
+去信任的交易撮合需要大量的信息。必须在适当的时间报告和转发交易详细信息，有时在后续操作之间会有很大的延迟。因此，通过HTTP轮询或其它基于请求间隔方法的匹配通知不适用于DEX系统。持久的全双工通信对于最小化通信延迟和浪费带宽至关重要。选择Websockets([https://tools.ietf.org/html/rfc6455 &#91;4&#93;])作为DEX交换API的默认和首选通信协议。除了满足上述需求之外，Websockets现在是一种成熟的技术，其客户端软件可用于几乎所有流行的编程语言的集成。
 
-Websocket messages are secured by encryption on Transport Layer
-Security (TLS) [https://tools.ietf.org/html/rfc8446 &#91;5&#93;] connections.
+Websocket消息通过传输层安全性（TLS）[https://tools.ietf.org/html/rfc8446 &#91;5&#93;]连接上的加密来保护。
 
 ===JSON-RPC===
 
-JavaScript Object Notation - Remote Procedure Call v2.0 (JSON-RPC 2.0) is a
-message formatting protocol for client-server communications
-[https://www.jsonrpc.org/specification &#91;6&#93;].
-The DEX API uses JSON-RPC exclusively for both inbound and outbound client
-communications.
-The JSON-RPC structure is simple and flexible.
+JavaScript Object Notation - Remote Procedure Call v2.0（JSON-RPC 2.0）是一种用于客户端 - 服务器通信的格式化消息协议[https://www.jsonrpc.org/specification &#91;6&#93;]。DEX API专门用于入站和出站客户端通信的JSON-RPC并且JSON-RPC的结构简单灵活。
 
 <pre>
 <nowiki>
@@ -100,27 +73,13 @@ The JSON-RPC structure is simple and flexible.
 }
 </pre>
 
-The <code>method</code> is the "remote procedure" being called, analogous to
-calling a function.
-Most parameters are passed as part of a <code>params</code> object or array.
-Parameters will vary with method.
-The <code>id</code> field links a response to a request, and is optional for
-''notifications'' which require no response.
+<code>method</code> 是被调用的“远程过程”，类似于调用函数。大多数参数都作为 <code>params</code> 对象或数组的一部分传递。参数将随方法而变化。该  <code>id</code> 字段链接对请求的响应，对于不需要响应的''notifications''是可选的 。
 
-JSON-RPC 2.0 specifies that in the case of an error, the response's
-<code>error</code>
-field will be non-<code>null</code> and the <code>result</code> field will be
-<code>null</code>.
-The opposite is true in the case of a success.
+JSON-RPC 2.0指定在出现错误的情况下，响应的 <code>error</code> 字段将为非字段 <code>null</code> ，而 <code>result</code> 字段将为 <code>null</code> 。在成功的情况下，情况正好相反。
 
 ===HTTP===
 
-An API using HTTP for message transport may be provided for basic account
-management and server status queries, however websocket connections are to be
-the sole means for
-[[#Client_Order_Management|placing, monitoring, and executing orders]].
-The primary reason for limiting the scope of the HTTP API is to eliminate client
-polling for rapidly changing resources, such as order status API endpoints.
+可以为基本帐户管理和服务器状态查询提供使用HTTP进行消息传输的API，但是websocket连接是用于[[#放置、_监视和执行订单|放置、监视和执行订单]]的唯一手段 。限制HTTP API范围的主要原因是消除客户端轮询以快速更改资源，例如订单状态API端点。
 
 ==Distributed Exchange Design Fundamentals==
 
