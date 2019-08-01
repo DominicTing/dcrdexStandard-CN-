@@ -35,7 +35,7 @@ __TOC__
 
 '''[[#通信_协议|通信协议]]''' 描述了用于DEX API的消息传递协议和通信层技术。
 
-'''[[#分布式_交换_设计_基础知识|分布式交换设计基础知识]]'''描述了促进具有上述特征的交换服务的显着设计方面。
+'''[[#去中心化_交换_设计_基础|去中心化交换设计基础]]'''描述了促进具有上述特征的交换服务的显着设计方面。
 
 '''[[#用户_订单_管理|用户订单管理]]'''详细说明了同步订单簿和下订单所需的不同订单类型和客户/服务器工作流程。
 
@@ -81,65 +81,48 @@ JSON-RPC 2.0指定在出现错误的情况下，响应的 <code>error</code> 字
 
 可以为基本帐户管理和服务器状态查询提供使用HTTP进行消息传输的API，但是websocket连接是用于[[#放置、_监视和执行订单|放置、监视和执行订单]]的唯一手段 。限制HTTP API范围的主要原因是消除客户端轮询以快速更改资源，例如订单状态API端点。
 
-==Distributed Exchange Design Fundamentals==
+==去中心化交换设计基础==
 
-There are several notable aspects of the DEX design that were chosen to permit
-peer-to-peer trades with the mechanics of order execution existing entirely on
-the separate blockchains via atomic swaps.
-These are:
-* Asset-specific order quantity increments and transaction fee rates
-* Epoch-based pseudorandom order matching
-* Client identities based on public key infrastructure (PKI)
-* An open and rigidly-defined interface for integration of arbitrary assets
+DEX设计的几个值得注意的方面被选择为允许对等交易，订单执行的机制完全存在于通过原子交换的单独区块链上。它们是：
 
-This section describes each of these design aspects.
+* 特定于资产的订单数量增量和交易费率
+* 基于纪元的伪随机顺序匹配
+* 基于公钥基础结构（PKI）的客户端身份
+* 用于集成任意资产的开放且严格定义的界面
 
-===Exchange Variables===
+本节介绍了这些设计方面。
 
-There are a number of asset-specific variables that must be known by the client.
+===交换变量===
 
-The '''lot size''' for an asset serves as both the minimum order quantity and
-the order quantity increment for limit orders and market buy orders, which are
-quantified in the market's base asset.
-In particular, for ''lot size''  '''''l''''', the requested ''order quantity'',
-'''''Q''''', must satisfy
+客户端必须知道许多特定于资产的变量。
+
+资产的 '''lot size''' 同时作为最低订货量和限价订单和市场的买盘，，这是在市场的基础资产量化的订单数量增加。即在市场基础资产中量化。特别是，对于'''lot size''' 而言，要求的''order quantity''，'''''Q'''''必须满足
+
+该地块面积为资产同时作为最低订货量和限价订单和市场的买盘，这是在市场的基础资产量化的订单数量增加。特别地，对于批量 升，所请求的订单数量， Q，必须满足特别是，对于“批量”而言，要求的“订单数量”，
+“Q”必须满足
 
 <!--Q = n l, n \in \{1, 2, 3, ...\}-->
 [[File:spec/images/lot-sizes.png]]
 
-When the asset is the quote asset, a '''price increment''' is enforced.
-The '''rate''', '''''r''''', of a limit order must be an integer multiple of the
-''price increment'', '''''p'''''.
+当资产是报价资产时，会强制执行价格增量。限价单的'''rate'''、'''''r'''''必须是整数倍 价格增量，'''''p'''''。
 
 <!--r = n p, n \in \{1, 2, 3, ...\}-->
 [[File:spec/images/price-increment.png]]
 
-The DEX operator specifies an on-chain transaction '''fee rate'''
-(units ''atoms/byte'') used when
-[[#Calculating_Transaction_Fees|calculating the fees]] for initialization
-transactions.
+DEX运算符指定在计算初始化事务的费用时使用的链上事务费率（单位原子/字节）。
 
-Each asset has two distinct '''minimum numbers of confirmations'''.
-The <code>fundconf</code> is the number of confirmations required for
-[[#Order_Preparation|backing UTXOs]]. The <code>swapconf</code> is the number
-of confirmations required during settlement on the first swap transaction,
-before the second swap transaction is broadcast.
+每项资产都有两个不同的'''最低确认数'''。这 <code>fundconf</code> 是[[#支持_UTXO|支持UTXO]]所需的确认数量 。这 <code>swapconf</code> 是在广播第二次掉期交易之前第一次掉期交易结算期间所需的确认数量。
 
-The minimum confirmation rule is waived for a change output from a transaction
-involved in a DEX-monitored trade.
+对于DEX监控交易中涉及的交易的变更输出，免除最小确认规则。
 
-The '''broadcast timeout''' is the amount of time a client has to broadcast a
-transaction. For the maker, the broadcast time is measured from the time of
-match notification.
-For the taker, timeout is measured from  the time when the maker's swap receives
-its <code>swapconf</code><sup>th</sup> confirmation.
+'''广播超时'''是客户端广播的事物。对于订单发起者，广播时间是从匹配通知的时间开始测量的。对于接受者，超时时间是从制造商的交换接收其的时间来测量 <code>swapconf</code> 的确认。
 
-Asset info should be requested by the user immediately after connecting.
+连接后，用户应立即请求资产信息。
 
-'''JSON-RPC method:''' <code>assets</code>, '''originator:''' client
+'''JSON-RPC 方式:''' <code>assets</code>, '''originator:''' client
 
 {|
-! field     !! type !! description
+! 领域     !! 类型 !! 描述
 |-
 | epochlen  || int   || the [[#Epochbased_Order_Matching|epoch duration]] (seconds)
 |-
@@ -152,10 +135,10 @@ Asset info should be requested by the user immediately after connecting.
 | btimeout  || int   || the broadcast timeout
 |}
 
-'''Asset object'''
+'''资产对象'''
 
 {|
-! field    !! type !! description
+! 领域    !! 类型 !! 描述
 |-
 | symbol   || string || ticker symbol
 |-
@@ -174,119 +157,66 @@ Asset info should be requested by the user immediately after connecting.
 | scripts  || &#91;string&#93; || acceptable backing UTXO script types. minimum &#91;"P2PKH"&#93;
 |}
 
-===Fees===
+===费用===
 
-The DEX collects no trading fees.
-Collecting fees from trades executed via atomic swaps (where the server
-is never in control of funds and settlement occurs directly on-chain) would
-add considerable complexity to the swap process and incentivize DEX operators to
-facilitate wash trading.
-Instead, a one-time fee is collected by the pool during registration.
-Registration fees discourage certain spam attacks, enable punitive actions when
-[[#Rules_of_Community_Conduct|conduct rules]] are violated, and help to cover
-DEX operating expenses.
-Registration fees will be configurable by the exchange operator.
+DEX不收取任何交易费用。从通过原子交换执行的交易中收取费用（服务器永远不能控制资金并且直接在链上进行结算）会增加交换过程的复杂性。在注册期间，交易池会收取一次性费用。注册费用可以阻止某些垃圾邮件攻击，在违反[[#社区_行为_规则|社区行为规则]]时启用惩罚性操作 ，并有助于支付DEX运营费用。注册费可由撮合交易服务器运营商配置。
 
-====Transaction Fees====
+====交易费用====
 
-The clients will cover on-chain transaction fees at a minimum fee rate set by
-the DEX operator.
-Failure to provide the specified fee rate in a transaction will result in a
-conduct violation.
+用户将以DEX运营商设定的低费率支付链上交易费用。未能在交易中提供指定的费率将导致违规行为。
 
-As part of any submitted order, a client is required to demonstrate control of
-funds that will back the atomic swap, and ensure that the backing funds are
-sufficient to create the swap contract transactions transferring the full order
-quantity as well as covering the network's transaction fees at the specified
-rate.
+作为任何提交订单的一部分，用户需要证明对支持原子交换的资金的控制，并确保支持资金足以创建交换合约交易以转移全部订单数量以及涵盖指定的费率网络交易费。
 
-Total on-chain fees associated with an order will increase as the number of swap
-transactions required to settle the order increases. Maximum fees paid
-[[#Calculating_Transaction_Fees|vary linearly with order size]], but the actual
-fees realized can be significantly less than the maximum.
-See the [[#Atomic_Settlement|atomic settlement]] section for examples of simple
-and complex matches and how that affects the swap transaction sizes.
+随着结算订单所需的掉期交易数量的增加，与订单相关的总链上费用将会增加。支付的最高费用[[#与_订单大小_呈线性关系|与订单大小呈线性关系]]，但实际支付的费用可能远低于最高费用。有关简单匹配和复杂匹配的示例以及它如何影响交换事务大小，请参阅[[#原子_结算|原子结算]]。
 
-Fee rates can vary greatly between assets.
-For many assets, low fees are possible without increasing the time until mined.
-Transaction fees tend to rise as an asset pushes the limits of on-chain scaling.
-For high-fee assets, the DEX operator must find a balance between lower fees,
-which are preferable from an accounting standpoint, and higher fees, which can
-decrease settlement time by increasing the speed at which transactions are
-mined.
+资产之间的费率差别很大。对于许多资产而言，可以在不增加开采时间的情况下收取低费用。随着资产推动链上扩展的限制，交易费用往往会上升。对于高费用资产，DEX运营商必须在较低的费用之间找到平衡，从会计的角度来看，这是较好的费用，而较高的费用可以通过提高交易的速度来减少结算时间。
 
-See also: [[#Calculating_Transaction_Fees|Calculating Transaction Fees]]
+另请参阅：[[#计算_交易费用|计算交易费用计算交易费用]]
 
-===Epoch-based Order Matching===
 
-In order to devalue predatory behavior exhibited by certain high-frequency
-trading algorithms, received orders are not processed continuously, but rather
-after a shuffling step with all other orders received in a fixed duration period
-called an ''epoch''.
-The goal of this algorithm is to ensure that an individual client cannot obtain
-a deterministic latency advantage over other clients when executing trades.
-Limiting this possibility mitigates advantages gained from front-running,
-spoofing, and other manipulative trading practices.
+===基于Epoch的订单匹配===
 
-====Epoch Time====
+为了使某些高频交易算法所表现出的掠夺性行为贬值，接收的订单不是连续处理的，而是在一个洗牌步骤之后，在称为时期的固定持续时间内接收到所有其他订单。此算法的目标是确保单个客户端在执行交易时无法获得超过其他客户端的确定性延迟优势。限制这种可能性可以减轻从前端运行，欺骗和其他操纵交易实践中获得的优势。
 
-For a given epoch duration '''''d > 0''''' , and current UNIX epoch time stamp
-'''''t''''' (in seconds since Jan 01 00:00:00 1970 UTC), the current order
-matching epoch index, '''''i''''', and epoch range are computed as
+====Epoch时间====
+
+对于给定的epoch持续时间d> 0和当前的UNIX epoch时间标记 t（自1970年1月1日00:00:00 1970以来的秒数），当前订单匹配的epoch索引，i和epoch范围被计算为
 
 <!--i = t / d, i d \leq t_i < d (i + 1)-->
 [[File:spec/images/epoch-index.png]]
 
-where '''''/''''' is integer division. For example, at the time of writing,
-'''''t = 1562008475''''' , which for '''''d = 60''''' corresponds to epoch
-number '''''i = 26033474''''' spanning '''''&#91;1562008440, 1562008500)'''''.
-This convention allows epoch times to be known without querying the server.
+其中/是整数除法。例如，在写入时， t = 1562008475，其中对于d = 60，对应于时期数i = 26033474，跨越[1562008440,1562008500]。此约定允许在不查询服务器的情况下知道Epoch时间。
 
-A clock synchronization protocol such as NTP will be used to ensure server and
-client clocks are synchronized within acceptable tolerances.
+将使用诸如NTP的时钟同步协议来确保服务器和客户端时钟在可接受的容差内同步。
 
-====Pseudorandom Order Matching====
+====伪随机顺序匹配====
 
-When the epoch ends, a match cycle begins.
+当Epoch结束时，匹配周期开始。
 
-First, the order pool is shuffled.
-Shuffling is deterministic, using the Fisher-Yates algorithm where the
-random number generator seed is derived from the hash of the concatenated order
-[[#Order_ID|ID hashes]].
-Specifically for hash function '''''f''''', the seed hash,
-'''''H<sub>seed</sub>''''' is computed as
+首先，订单池被洗牌。混洗是确定的，使用Fisher-Yates算法，其中随机数生成器种子是从连接的订单[[#ID列|ID散列]]的散列中导出的 。具体地，对于散列函数f，种子散列， H seed被计算为
 
 <!--H_{seed} = f(f(order_1) || f(order_2) || ... || f(order_N))-->
 [[File:spec/images/seed-eq.png]]
 
-where '''''order<sub>i</sub>''''' represents the order ID of the
-'''''i<sup>th</sup>''''' order in a lexicographically sorted list of
-[[#Order_ID|order IDs]] and '''''||''''' indicates concatenation.
+其中，顺序i表示按字典顺序排序的订单ID和||列表中第 i 个订单的 订单ID 表示连接。
 
-The order IDs and final hash are published at the start of the matching process.
-This is done so that the shuffling may be independently computed for external
-verification and to facilitate server mesh operation.
+订单ID和最终哈希在匹配过程开始时发布。这样做是为了可以独立地计算混洗以进行外部验证并且便于服务器网格操作。
 
-Orders are processed one at a time. Each order is matched according to its type.
+订单一次处理一个。每个订单根据其类型进行匹配。
 
-1. If the order is a '''cancel order''', any corresponding standing limit order is removed from the list and the cancel order is considered filled. If a cancellation is processed before the order that it cancels, the cancellation will fail, and will need to be re-submitted. That is, cancel orders do not affect down-queue orders, only standing orders.
+1.如果订单是'''取消订单'''，则从列表中删除任何相应的常设限价订单，并且取消订单被视为已填写。如果在取消订单之前处理取消，则取消将失败，并且需要重新提交。也就是说，取消订单不会影响下行排序，只会影响常规订单。
 
-2. If the order is a limit order with time in force ''standing'' that cannot match immediately (a '''maker'''), it is added to the standing orders. It is immediately able to match orders further down the queue.
+2.如果订单是限价订单已经生效时间站立不能匹配立即('''一个制造商''')，它被添加到常规命令。它可以立即匹配队列中的订单。
 
-3. If the order is a '''taker''', it is matched against the best available standing order. Clients for both orders are notified and the settlement process begins. The orders are set aside for monitoring. If a limit order with time in force ''standing'' on either side of the match is only partially filled, it is added to the standing orders with the appropriate modifications and is immediately available for matching again.
+3.如果订单是接受方，则将其与最佳可用常规订单进行匹配。通知两个订单的客户并开始结算过程。订单被留出来进行监控。如果现行的时限为了站在对本场比赛的两侧仅部分填充，它被添加到站立订单适当的修改，并可以立即再次匹配。
 
-Any unmatched quantity on a limit order with time in force ''immediate'' is
-left unfilled.
-Market orders and immediate limit orders cannot match orders further down the
-queue.
+限制订单中任何有效时间的不匹配数量将立即生效。市场订单和即时限价订单无法匹配进一步排队的订单。
 
-When a limit order matches a limit order, the match is assigned the price
-rate of the taker's order.
+当限价订单与限价订单匹配时，将为匹配分配接受者订单的价格率。
 
-The process continues with the next order in the list and iterates until all
-orders have been processed.
+该过程继续执行列表中的下一个订单并进行迭代，直到所有订单都已处理完毕。
 
-===Identities based on Public Key Infrastructure (PKI) Key Pairs===
+===基于公钥基础设施（PKI）密钥对的身份===
 
 The server and the clients are identified and authenticated using public keys,
 with matching private keys used to sign and authorize orders and other messages.
@@ -306,7 +236,7 @@ exchange data via Politeia. For example, given common identities between the DEX
 and Politeia, anchoring data related to DEX client and server conduct on the
 Decred blockchain may be useful for establishing a reputation system.
 
-===Blockchain Interaction===
+===区块链交互===
 
 '''Clients''' need wallets that support atomic swaps and the ability to
 broadcast transactions to each of the blockchain networks involved in
@@ -332,7 +262,7 @@ With the exception of Decred and Bitcoin, which will be implemented during
 initial phases of DEX development, it is expected that development communities
 will release their own appropriately vetted plugins.
 
-==Account Creation==
+==帐户创建==
 
 An account is uniquely identified by the client's public account key (pubkey),
 which the client provides during registration.
@@ -343,7 +273,7 @@ double SHA-256 hash of the client's pubkey,
 '''''<code>sha256(sha256(pubkey))</code>''''', provided as a hex-encoded
 string in JSON-RPC calls.
 
-===Step 1: Registration===
+===步骤 1: 注册===
 
 The user creates a websocket connection and sends their
 [[#Identities_based_on_Public_Key_Infrastructure_PKI_Key_Pairs|public account key]].
@@ -351,10 +281,10 @@ The message is signed with the corresponding private account key. The response
 includes the server's public key. The server's public key will also be
 pre-published for further validation.
 
-'''JSON-RPC method:''' <code>register</code>, '''originator: ''' client
+'''JSON-RPC 方式:''' <code>register</code>, '''originator: ''' client
 
 {|
-! field     !! type   !! description
+! 领域     !! 类型   !! 描述
 |-
 | pubkey    || string || hex-encoded public account key
 |-
@@ -363,20 +293,20 @@ pre-published for further validation.
 | sig       || string || hex-encoded signature of serialized registration. serialization described below
 |}
 
-'''Registration serialization'''
+'''注册序列化'''
 
 {|
-! field     !! size (bytes) !! description
+! 领域     !! 大小 (bytes) !! 描述
 |-
 | pubkey    || 32 || the user's public account key
 |-
 | timestamp || 8  || the client's UNIX timestamp
 |}
 
-'''Response parameters'''
+'''响应参数'''
 
 {|
-! field     !! type   !! description
+! 领域     !! 类型   !! 描述
 |-
 | pubkey    || string || hex-encoded server public key.
 |-
@@ -389,10 +319,10 @@ pre-published for further validation.
 | sig       || string || hex-encoded signature of the serialized response. serialization described below
 |}
 
-'''Response serialization'''
+'''响应序列化'''
 
 {|
-! field      !! size (bytes) !! description
+! 领域      !! 大小 (bytes) !! 描述
 |-
 | DEX pubkey || 32 || the server's public key
 |-
@@ -405,16 +335,16 @@ pre-published for further validation.
 | address    || varies || ASCII-encoded fee address
 |}
 
-===Step 2: Fee Notification===
+===步骤2: 费用通知===
 
 The client pays the fee on-chain and notifies the DEX of the transaction detail.
 The fee is paid with a standard P2PKH output to the address received in step 1.
 The server immediately sends their receipt and then closes the connection.
 
-'''JSON-RPC method:''' <code>notifyfee</code>, '''originator: ''' client
+'''JSON-RPC 方式:''' <code>notifyfee</code>, '''originator: ''' client
 
 {|
-! field     !! type   !! description
+! 领域     !! 类型   !! 描述
 |-
 | accountid || string || client's account ID
 |-
@@ -427,10 +357,10 @@ The server immediately sends their receipt and then closes the connection.
 | sig       || string || hex-encoded signature of serialized fee notification. serialization described below
 |}
 
-'''Notification serialization'''
+'''通知序列化'''
 
 {|
-! field      !! size (bytes) !! description
+! 领域      !! 大小 (bytes) !! 描述
 |-
 | account ID || 16 || client account ID
 |-
@@ -439,15 +369,15 @@ The server immediately sends their receipt and then closes the connection.
 | vout       || 4  || transaction output index
 |}
 
-'''Response parameters'''
+'''响应参数s'''
 
 {|
-! field     !! type   !! description
+! 领域     !! 类型   !! 描述
 |-
 | sig       || string || server hex-encoded signature of client's serialized notification
 |}
 
-===Step 3: Await Confirmation===
+===步骤3: 等待确认===
 
 Once the transaction is mined and has the
 [[#Exchange_Variables|requisite number of confirmations]], the client
@@ -455,7 +385,7 @@ should [[#Session_Authentication|create a new authenticated connection]].
 If the client attempts to connect before <code>swapconf</code> confirmations,
 the DEX should reject the connection outright.
 
-==Client Order Management==
+==客户订单管理==
 
 This section describes the steps required of the client to place an order, and
 the interactions between the client and server to execute an order once a match
@@ -473,7 +403,7 @@ The order book holds only limit orders with time in force ''standing'' that have
 not completely filled or been cancelled. All other orders are only valid for one
 [[#Epochbased_Order_Matching|epoch match cycle]].
 
-===Session Authentication===
+===会话身份验证===
 
 Orders must be placed on an authenticated connection. Once a websocket
 connection is established, the client will supply their account ID and signature.
@@ -481,7 +411,7 @@ connection is established, the client will supply their account ID and signature
 '''JSON-RPC method:''' <code>connect</code>, '''originator: ''' client
 
 {|
-! field      !! type   !! description
+! 领域      !! 类型   !! 描述
 |-
 | accountid || string || account ID
 |-
@@ -495,7 +425,7 @@ connection is established, the client will supply their account ID and signature
 '''Connect serialization'''
 
 {|
-! field   !! size (bytes) !! description
+! 领域   !! 大小 (bytes) !! 描述
 |-
 | account ID || 16 || client [[#Step_1_Registration|account ID]]
 |-
@@ -504,7 +434,7 @@ connection is established, the client will supply their account ID and signature
 | timestamp || 8  || the client's UNIX timestamp
 |}
 
-'''Connect response'''
+'''连接响应'''
 
 If the client connects shortly after a [[#Trade_Suspension|trade suspension]],
 it's possible that trading will not commence until a future epoch. The DEX
@@ -514,14 +444,14 @@ If a client unexpectedly disconnects with active orders, the orders may match in
 the client's absence. A list of any pending matches is included in the response.
 
 {|
-! field      !! type   !! description
+! 领域      !! 类型   !! 描述
 |-
 | startepoch || int   || the epoch at which trading did or will commence. May be in the future e.g. [[#Trade_Suspension|after maintenance]]
 |-
 | matches    || &#91;object&#93; || list of [[#Match_notifications|Match objects]]
 |}
 
-===Connection Persistence===
+===连接持久性===
 
 If a connection is lost after placing an order, the client must reconnect and
 complete settlement on any matches made in their absence.
@@ -545,14 +475,14 @@ through a single match cycle.
 If a client is in the settlement phase when a connection is dropped, the
 client will be expected to reconnect and complete settlement.
 
-===Order Book Subscriptions===
+===订单订阅===
 
 An order book can be viewed and tracked by subscribing to a market.
 
-'''JSON-RPC method:''' <code>orderbook</code>, '''originator: ''' client
+'''JSON-RPC 方式:''' <code>orderbook</code>, '''originator: ''' client
 
 {|
-! field !! type   !! description
+! 领域 !! 类型   !! 描述
 |-
 | base  || string || currency code for the market's base asset
 |-
@@ -566,20 +496,20 @@ The client is responsible for tracking the sequence ID to ensure all order
 updates are received. If an update appears to be missing, the client should
 re-subscribe to the market to synchronize the order book from scratch.
 
-'''Response'''
+'''响应'''
 
 {|
-! field       !! type   !! description
+! 领域      !! 类型   !! 描述
 |-
 | book  || object || An OrderBook object
 |-
 | seq   || int    || A sequence ID
 |}
 
-'''JSON OrderBook object'''
+'''JSON OrderBook 对象'''
 
 {|
-! field    !! type !! description
+! 领域    !! 类型 !! 描述
 |-
 | marketid || int || the market ID. included with order book updates.
 |-
@@ -588,10 +518,10 @@ re-subscribe to the market to synchronize the order book from scratch.
 | orders   || &#91;object&#93; || A list of Order objects
 |}
 
-'''JSON Order object'''
+'''JSON Order 对象'''
 
 {|
-! field   !! type   !! description
+! 领域   !! 类型  !! 描述
 |-
 | oid     || string || the order ID
 |-
@@ -613,10 +543,10 @@ updates.
 These updates take the JSON-RPC notification format, so omit an <code>id</code>
 attribute.
 
-'''JSON-RPC method:''' <code>remove_order</code>, '''originator: ''' DEX
+'''JSON-RPC 方式:''' <code>remove_order</code>, '''originator: ''' DEX
 
 {|
-! field   !! type !! description
+! 领域   !! 类型 !! 描述
 |-
 | marketid || int || the market ID
 |-
@@ -628,7 +558,7 @@ attribute.
 '''JSON-RPC method:''' <code>add_limit</code> & <code>add_market</code>, '''originator: ''' DEX
 
 {|
-! field  !! type!! description
+! 领域  !! 类型!! 描述
 |-
 | marketid || int || the market ID
 |-
@@ -644,7 +574,7 @@ IDs and the seed hash used for
 '''JSON-RPC method:''' <code>match_data</code>, '''originator: ''' DEX
 
 {|
-! field    !! type !! description
+! 领域    !! type !! description
 |-
 | marketid || int || the market ID
 |-
@@ -661,12 +591,12 @@ websocket connection.
 '''JSON-RPC method:''' <code>unsub_orderbook</code>, '''originator: ''' client
 
 {|
-! field  !! type !! description
+! 领域  !! type !! description
 |-
 | marketid || int || the market ID
 |}
 
-===Order Preparation===
+===订单准备===
 
 As part of the order, the client must demonstrate control of funds.
 This is accomplished by supplying information and a signature for each previous
@@ -681,7 +611,7 @@ single-lot matches for the entire order.
 In practice, large orders will rarely pay the total of the base fees because
 many of the matches will be more than a single-lot.
 
-====Calculating Transaction Fees====
+====计算交易费用s====
 
 The '''base fees''' cover transaction fees associated with making
 initialization transactions for every match in the order.
@@ -713,7 +643,7 @@ backing UTXOs, '''''f<sub>utxo</sub>'''''.
 The client must know how to calculate the script sizes to assess fees.
 The DEX will verify the UTXO sum before accepting the order.
 
-====UTXO Preparation====
+====UTXO准备====
 
 All backing UTXOs must have a minimum number of confirmations. The exact number,
 <code>swapconf</code>, is an [#Exchange_Variables}|asset variable]] set by the
@@ -731,10 +661,10 @@ As a rule, P2PKH will always be available.
 
 As part of the order, the client will submit a list of ''UTXO objects''.
 
-'''JSON UTXO object'''
+'''JSON UTXO对象'''
 
 {|
-! field     !! type   !! description
+! 领域     !! type   !! description
 |-
 | txid      || string || hex-encoded transaction ID
 |-
@@ -753,17 +683,17 @@ table below. The data is signed with the private key corresponding to
 The <code>pubkey</code> must hash to a receiving address in the UTXO's pubkey
 script.
 
-'''UTXO serialization'''
+'''UTXO序列化'''
 
 {|
-! field   !! size (bytes) !! description
+! 领域   !! size (bytes) !! description
 |-
 | tx hash || 32 || the transaction hash
 |-
 | vout    || 4  || the UTXO's transaction output index
 |}
 
-====Order Signing====
+====订单签名====
 
 All orders must be signed by the client and the server.
 The basic signing procedure will involve serializing order data into a byte array
@@ -775,9 +705,9 @@ All integer encoding for all serialized structures is big endian.
 
 All order serializations have a common ''prefix structure''.
 
-'''Prefix serialization'''
+'''前缀序列化'''
 {|
-! field       !! size (bytes)   !! description
+! 领域      !! size (bytes)   !! description
 |-
 | account ID  || 16 || client account ID
 |-
@@ -792,13 +722,13 @@ All order serializations have a common ''prefix structure''.
 | server time || 8  || the server's UNIX timestamp. zeros for client-size serialization
 |}
 
-====Order ID====
+====订单ID====
 
 The order serialization is used to create a unique order ID.
 The ID is defined as the SHA-256 hash of the serialized order.
 It is represented in messaging as a hex-encoded string.
 
-===Limit Order===
+===限价订单===
 
 Limit orders are for the trade of assets at a rate no higher (buy) or lower
 (sell) than a specified price.
@@ -813,7 +743,7 @@ crosses the spread (i.e. a taker rather than a maker). The
 '''JSON-RPC method:''' <code>limit</code>, '''originator:''' client
 
 {|
-! field       !! type   !! description
+! 领域       !! type   !! description
 |-
 | accountid   || string || client's account ID
 |-
@@ -840,20 +770,20 @@ crosses the spread (i.e. a taker rather than a maker). The
 | address     || string || address where the matched client will send funds
 |}
 
-'''Response parameters'''
+'''响应参数'''
 
 {|
-! field     !! type   !! description
+! 领域    !! type   !! description
 |-
 | sig       || string || server hex-encoded signature of the serialized order, after adding the DEX timestamp
 |-
 | server time || int  || the server's UNIX timestamp
 |}
 
-'''Limit order serialization'''
+'''限价订单序列化'''
 
 {|
-! field      !! size (bytes)  !! description
+! 领域      !! size (bytes)  !! description
 |-
 | prefix     || 65 || [[#utxo-preparation|the order prefix]]
 |-
@@ -872,7 +802,7 @@ crosses the spread (i.e. a taker rather than a maker). The
 | address   || varies || client's receiving address
 |}
 
-===Market Order===
+===市价订单===
 
 A market order is an order to buy or sell an asset at the best available
 market price. The JSON-RPC <code>params</code> fields are similar to a limit
@@ -885,7 +815,7 @@ the epoch match cycle) is left unfilled.
 '''JSON-RPC method:''' <code>market</code>, '''originator: ''' client
 
 {|
-! field     !! type   !! description
+! 领域     !! type   !! description
 |-
 | accountid || string || client's account ID
 |-
@@ -908,20 +838,20 @@ the epoch match cycle) is left unfilled.
 | address   || string || address where the matched client will send funds
 |}
 
-'''Response parameters'''
+'''响应参数'''
 
 {|
-! field     !! type   !! description
+! 领域     !! type   !! description
 |-
 | sig       || string || server hex-encoded signature of the order by server, after adding the DEX timestamp
 |-
 | server time || int  || the server's UNIX timestamp
 |}
 
-'''Market order serialization'''
+'''市价订单序列化'''
 
 {|
-! field      !! size (bytes)  !! description
+! 领域      !! size (bytes)  !! description
 |-
 | prefix     || 65 || [[#UTXO_Preparation|the order prefix]]
 |-
@@ -938,7 +868,7 @@ the epoch match cycle) is left unfilled.
 | address    || varies || client's receiving address
 |}
 
-====Market Buy Orders====
+====市价买单====
 
 Market buy orders have a slightly different ruleset than market sell orders or
 limit orders.
@@ -975,7 +905,7 @@ accepted but is now too small to match is considered executed but unfilled and
 there is no change to the account's
 [[#Rules_of_Community_Conduct|cancellation statistics]].
 
-===Cancel Order===
+===取消订单===
 
 Cancel orders remove standing limit orders from the order book.
 A client cannot cancel a market order or a limit order with time in force
@@ -1001,7 +931,7 @@ This is by design and discourages certain types of spoofing.
 | sig       || string || client hex-encoded signature of the serialized order data. serialization described below
 |}
 
-'''Response parameters'''
+'''响应参数s'''
 
 {|
 ! field     !! type   !! description
@@ -1011,7 +941,7 @@ This is by design and discourages certain types of spoofing.
 | server time || int  || the server's UNIX timestamp
 |}
 
-'''Cancel order serialization'''
+'''取消订单序列化n'''
 
 {|
 ! field      !! size (bytes)  !! description
@@ -1021,7 +951,7 @@ This is by design and discourages certain types of spoofing.
 | orderid    || 16 || the order ID
 |}
 
-===Match notifications===
+===匹配通知s===
 
 If the client's order has one or more matches at the end of a match cycle, the
 DEX will send a list of '''Match objects'''.
@@ -1050,7 +980,7 @@ The client will be responsible for serializing the notification and checking
 the signature. In turn, the client should themselves sign the notification data
 and return an acknowledgement to the DEX.
 
-'''Client Acknowledgement'''
+'''用户确认'''
 
 The client will return a list of signed match acknowledgements.
 
@@ -1062,7 +992,7 @@ The client will return a list of signed match acknowledgements.
 | sig       ||  string || client hex-encoded signature of the serialized notification data.
 |}
 
-'''Match notification serialization'''
+'''匹配通知序列化'''
 
 {|
 ! field      !! size (bytes)  !! description
@@ -1078,7 +1008,7 @@ The client will return a list of signed match acknowledgements.
 | address    || varies || ASCII encoded receiving address for the match
 |}
 
-===Progress Notifications===
+===进度通知===
 
 After the client broadcasts both their initialization and redemption
 transactions, they are expected to report the transaction details to the server
@@ -1102,7 +1032,7 @@ for verification and relay to the counterparty.
 | sig        || string || client signature of the serialized progress notification. serialization described below
 |}
 
-'''DEX Acknowledgement'''
+'''DEX确认'''
 
 {|
 ! field      !! type   !! description
@@ -1115,7 +1045,7 @@ for verification and relay to the counterparty.
 |}
 
 
-'''Progress notification serialization'''
+'''进度通知序列化'''
 
 {|
 ! field      !! size (bytes)  !! description
@@ -1133,7 +1063,7 @@ for verification and relay to the counterparty.
 | timestamp || 8  || the client's UNIX timestamp
 |}
 
-===Match revocation===
+===匹配撤销===
 
 A match can be revoked by the server if a client fails to act within the
 [[#Exchange_Variables|broadcast timeout]]. A match revocation will result in
@@ -1152,7 +1082,7 @@ The revoked match quantity is not added back to the orderbook in any form.
 | sig      || string || server hex-encoded signature of serialized revocation. serialization described below
 |}
 
-'''Revocation serialization'''
+'''撤销序列化'''
 
 {|
 ! field      !! size (bytes)  !! description
@@ -1162,7 +1092,7 @@ The revoked match quantity is not added back to the orderbook in any form.
 | matchid    || 8  || the ID assigned to this match
 |}
 
-==Trade Suspension==
+==交易暂停n==
 
 There are a number of scenarios where the server may suspend operations,
 intentionally or not.
@@ -1199,7 +1129,7 @@ does not reconnect before the next [[#Session_Authentication|startepoch]].
 | persist    || bool   || whether standling limit order's will persist through the suspension
  |}
 
-==Atomic Settlement==
+==原子结算==
 
 In order to facilitate trustless, non-custodial exchange, the DEX leverages an
 atomic swap process that enables all parties to maintain full control over their
@@ -1228,7 +1158,7 @@ The market is a DCR/BTC market, where DCR is the “base asset” and BTC is the
 Order quantities are in units of DCR, and the rate offered in a limit order is
 denominated in BTC.
 
-===Case A: Perfect match===
+===案例A：完美匹配===
 
 In the most basic case, Alice and a trader named Bob are the only participants
 and their orders match perfectly.
@@ -1319,7 +1249,7 @@ the atomic swap.'''
 
 <img src="spec/images/bob-redeem.png">
 
-===Case B: Multi-taker with partial fill===
+===案例B：具有部分填充的多接收者===
 
 In case B, Alice is similarly trying to sell 3 DCR for 0.3 BTC, but the match
 found by the DEX is not perfect this time.
@@ -1357,15 +1287,15 @@ transaction. They broadcast their transactions.
 transactions, one for Bob and one for Carl.
 Bob and Carl then follow up with their own redemptions.
 
-==Community Conduct==
+==社区行为==
 
 By registering, clients agree to abide by the rules described here. These rules
 are designed to ensure that clients are acting in good faith and maintaining
 behaviors that contribute to a smooth DEX experience for humans.
 
-===Rules of Community Conduct===
+===社区行为规则===
 
-====Rule 1: Every match must be fully settled====
+====规则1：每笔交易必须完全解决====
 
 Swap transactions must be created at the correct times (see
 [[#Exchange_Variables|broadcast timeout]]).
@@ -1379,7 +1309,7 @@ replace the order.
 In the event that the taker fails to respond to the maker's initialization
 transaction, the maker will incur no violation.
 
-====Rule 2: An account's cancellation ratio must remain below the threshold====
+====规则2：帐户的取消比率必须低于阈值====
 
 The cancellation ratio is the ratio of the count of cancelled orders to the
 count of completed orders.
@@ -1391,7 +1321,7 @@ dropped and the client fails to reconnect for more than 1 epoch duration.
 Cancellation of a partially filled order is counted as a full cancellation.
 The cancellation ratio is evaluated on a 25-order rolling window.
 
-====Rule 3: Transaction outputs must be properly sized====
+====规则3：交易输出必须适当调整大小====
 
 The swap output value must be sized to exactly the matched amount. The fee rate
 must be at least the minimum value set by the DEX. It is the client's
@@ -1399,7 +1329,7 @@ responsibility to ensure that fees on a partial fill are not overpaid to a
 level that results in a violation of rules 1 or 3 when the remaining portion is
 matched.
 
-===Penalties===
+===处罚===
 
 The primary penalty for breaches of conduct is a '''ban''', which includes loss
 of trading privileges, forfeiture of registration fee, and immediate revocation
@@ -1408,11 +1338,11 @@ of any unfilled orders.
 Less drastic punitive measures such as a cool-down period may be considered
 for minor, first-time or infrequent conduct violations.
 
-==Data API==
+==数据API==
 
 Trade history will be made available to both websocket and HTTP clients.
 
-==Exchange Administration==
+==交换管理==
 
 Operation of the DEX will require a non-trivial amount of administrative labor.
 Clients will expect near-perfect uptime and long-term operation.
@@ -1423,7 +1353,7 @@ That said, changes to exchange or asset variables will often entail revocation
 of all existing orders on a market, so should be done as infrequently as
 possible.
 
-'''Exchange Variables'''
+'''交换变量'''
 
 {|
 ! variable !! relevant section !! units || default
@@ -1437,7 +1367,7 @@ possible.
 | cancellation&nbsp;threshold || [[Rule_2_An_accounts_cancellation_ratio_must_remain_below_the_threshold|Rule 2]] || unitless ratio || 0.6
 |}
 
-'''Per-asset Variables'''
+'''每个资产变量'''
 
 {|
 ! variable !! units !! description
@@ -1457,7 +1387,7 @@ See also [[#Exchange_Variables|Exchange Variables]].
 
 ...
 
-==References==
+==参考s==
 
 &#91;1&#93; Teall, John L., Financial Trading and Investing, p. 336 (2013)
 
