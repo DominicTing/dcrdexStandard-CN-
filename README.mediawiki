@@ -1553,4 +1553,4 @@ See also [[#Exchange_Variables|Exchange Variables]].
 
 翻译：Dominic
 
-原文请访问[decred-dcrdex](https://github.com/decred/dcrdex/blob/master/README.mediawiki)
+原文请访问decred-dcrdex
