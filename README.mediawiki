@@ -1387,7 +1387,7 @@ See also [[#Exchange_Variables|Exchange Variables]].
 
 ...
 
-==参考s==
+==参考==
 
 &#91;1&#93; Teall, John L., Financial Trading and Investing, p. 336 (2013)
 
