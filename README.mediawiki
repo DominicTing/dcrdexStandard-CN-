@@ -1111,6 +1111,4 @@ DEX的运作需要非常少量的行政人员。客户将期望近乎完美的�
 
 &#91;6&#93; [https://www.jsonrpc.org/specification JSON-RPC 2.0 Specification]
 
-翻译：Dominic
-
 [https://github.com/decred/dcrdex/blob/master/README.mediawiki#table-of-contents 原文请访问]
