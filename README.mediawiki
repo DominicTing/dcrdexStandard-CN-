@@ -222,7 +222,7 @@ DEX不收取任何交易费用。从通过原子交换执行的交易中收取�
 
 从客户端提交给撮合交易服务器的所有数据必须使用客户端的私钥进行签名，并由服务器使用相应的公钥进行身份验证，因此直接使用客户端公钥进行身份验证是一种自然的简化，可以避免客户端用户名的需要和密码。
 
-此外，由于decred的链下治理平台Politeia也使用PKI，因此可以在两种服务上使用相同的身份，以便通过Politeia为交换数据添加时间戳。例如，给定DEX和Politeia之间的共同身份，在Decred区块链上锚定与DEX客户端和服务器行为相关的数据可能对建立信用系统很有用。
+此外，由于Decred的链下治理平台Politeia也使用PKI，因此可以在两种服务上使用相同的身份，以便通过Politeia为交换数据添加时间戳。例如，给定DEX和Politeia之间的共同身份，在Decred区块链上锚定与DEX客户端和服务器行为相关的数据可能对建立信用系统很有用。
 
 ===区块链交互===
 
@@ -230,44 +230,19 @@ DEX不收取任何交易费用。从通过原子交换执行的交易中收取�
 
 '''DEX运营商'''需要访问受支持的每个区块链项目的可信完整节点。虽然通过代理区块链数据服务（例如块浏览器）进行操作是可行的，但这会带来很大的安全风险。初始开发需要直接连接到每个区块链项目的完整节点。
 
-通过实现特定的Go[https://golang.org/ Go]接口来添加对资产的支持 。导出和编译接口-buildmode=plugin以启用交换运营商的动态导入。操作员将决定通过配置文件导入哪些插件。由于预期的接口在初始实现期间会发生很大变化，因此接口结构的细节将在稍后发布。
+通过实现特定的[https://golang.org/ Go]接口来添加对资产的支持 。导出和编译接口-buildmode=plugin以启用交换运营商的动态导入。操作员将决定通过配置文件导入哪些插件。由于预期的接口在初始实现期间会发生很大变化，因此接口结构的细节将在稍后发布。
 
-除了将在DEX开发的初始阶段实施的Decred和Bitcoin之外，预计开发社区将发布他们自己经过适当审查的插件。
-
-
-Adding support for an asset is accomplished by implementing a particular
-[https://golang.org/ Go] interface.
-The interface is exported and compiled with <code>-buildmode=plugin</code> to enable
-dynamic importing by the exchange operator.
-The operator will decide which plugins to import via configuration file.
-As the expected interface is expected to evolve greatly during initial
-implementation, the specifics of interface structure will be released at a later
-time.
-
-With the exception of Decred and Bitcoin, which will be implemented during
-initial phases of DEX development, it is expected that development communities
-will release their own appropriately vetted plugins.
+除了将在DEX开发的初始阶段实施的Decred和Bitcoin之外，预计其它开发社区将发布它们自己经过适当审查的插件。
 
 ==帐户创建==
 
-An account is uniquely identified by the client's public account key (pubkey),
-which the client provides during registration.
-After registration, the client does not identify themselves with their pubkey
-directly.
-Instead, the account is identified by an '''account ID''', which is the
-double SHA-256 hash of the client's pubkey,
-'''''<code>sha256(sha256(pubkey))</code>''''', provided as a hex-encoded
-string in JSON-RPC calls.
+帐户由客户端的公共帐户密钥（pubkey）唯一标识，客户端在注册期间提供该密钥。注册后，客户端不直接用自己的pubkey标识自己。相反，帐户由'''帐户ID标识'''，帐户ID是客户端pubkey的双SHA-256哈希值， '''''<code>sha256(sha256(公钥))</code>'''''在JSON-RPC调用中作为十六进制编码字符串提供。
 
 ===步骤 1: 注册===
 
-The user creates a websocket connection and sends their
-[[#Identities_based_on_Public_Key_Infrastructure_PKI_Key_Pairs|public account key]].
-The message is signed with the corresponding private account key. The response
-includes the server's public key. The server's public key will also be
-pre-published for further validation.
+用户创建websocket连接并发送其[[#公共_密钥|公共帐户密钥]]。邮件使用相应的私人帐户密钥签名。响应包括服务器的公钥。服务器的公钥也将预先发布以进一步验证。
 
-'''JSON-RPC 方式:''' <code>register</code>, '''originator: ''' client
+'''JSON-RPC 方式:''' <code>register</code>, '''发起人: '''用户
 
 {|
 ! 领域     !! 类型   !! 描述
@@ -323,11 +298,9 @@ pre-published for further validation.
 
 ===步骤2: 费用通知===
 
-The client pays the fee on-chain and notifies the DEX of the transaction detail.
-The fee is paid with a standard P2PKH output to the address received in step 1.
-The server immediately sends their receipt and then closes the connection.
+客户支付链上费用并通知DEX交易细节。使用标准P2PKH输出向步骤1中收到的地址支付费用。服务器立即发送收据，然后关闭连接。
 
-'''JSON-RPC 方式:''' <code>notifyfee</code>, '''originator: ''' client
+'''JSON-RPC 方式:''' <code>notifyfee</code>, '''发起人: ''' 客户端
 
 {|
 ! 领域     !! 类型   !! 描述
@@ -365,11 +338,7 @@ The server immediately sends their receipt and then closes the connection.
 
 ===步骤3: 等待确认===
 
-Once the transaction is mined and has the
-[[#Exchange_Variables|requisite number of confirmations]], the client
-should [[#Session_Authentication|create a new authenticated connection]].
-If the client attempts to connect before <code>swapconf</code> confirmations,
-the DEX should reject the connection outright.
+一旦交易被发现并具有[[#必要数量_的确认|必要数量的确s]]，[[#Session_Authentication|客户端应该创建新的经过身份验证的连接]]。如果客户端在swapconf确认之前尝试连接，则DEX应该完全拒绝连接。
 
 ==客户订单管理==
 
