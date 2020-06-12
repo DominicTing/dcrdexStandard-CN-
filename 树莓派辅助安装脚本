@@ -1,46 +1,46 @@
-*NOTE: This tutorial is geared towards low-end users who are just looking to run a node to help support the Decred network. For that reason, it does not dive into staking, setting up a wallet, or anything else beyond getting the node running with TOR. This guide will be updated as needed per new releases and tweaks*
+*注意：本教程仅适用于希望运行全节点以帮助支持Decred网络的初级用户。因此，除了让节点使用TOR运行之外、没有设置Staking和设置钱包或其它任何事情。本指南将根据新版本的调整进行更新。*
 
-## Raspberry Pi Full Node With Tor Guide
+## 在树莓派使用Tor运行全节点指南
 
 
-#### Introduction
+#### 介绍
 
-In this tutorial, I’ll walk you through how to setup and run a Decred Full Node on the Raspberry Pi with Tor enabled. 
+在本教程中，我将指导您如何在启用了Tor的 Raspberry pi (以下统称树莓派)上设置和运行Decred对等全节点（以下统称全节点）。
 
-A full node is a program that fully validates transactions and blocks, without having to rely on a third party.
+全节点是一个程序，它可以完全不依赖第三方独立验证交易和区块。
 
-Running a full node is one of the strongest actions of support you can do for a peer-to-peer distributed protocol. Every single Decred node that runs on the network adds strength and resilience to the consensus mechanism.
+运行全节点是对等分布式协议可以采取的最强有力的支持措施之一。网络上运行的每个Decred节点都为共识机制增加了强度和弹性。
 
-This video is geared towards low-level users new to the Raspberry Pi and Linux. The easiest way to follow along is to run this video alongside the script I've released on github where you can copy and paste in all of the needed commands. You'll see me doing this in the video.
+该视频面向的是Raspberry Pi和Linux的新手。最简单的方法是将视频与我在github上发布的脚本一起运行，您可以在其中复制和粘贴所有必需的命令。您会在视频中看到我这样做。
 
-I'd like to thank Checkmate for the original [Raspberry Pi Guide](https://medium.com/decred/running-a-decred-raspberry-pi-node-ac605b70c652), and Kozel for the [guide on setting up TOR](https://github.com/artikozel/decred-articles/blob/master/English/howilearnedtostopworryingandlovethecli/part2-configuringtor.md).
+我要感谢Checkmate提供的原始[设置树莓派](https://medium.com/decred/running-a-decred-raspberry-pi-node-ac605b70c652)指南和Kozel提供 [TOR设置指南](https://github.com/artikozel/decred-articles/blob/master/English/howilearnedtostopworryingandlovethecli/part2-configuringtor.md)。
 
-So lets start:
+让我们开始吧：
 
-#### You’ll need:
+#### 你需要准备：
 
-- Raspberry pi 3b+ or higher
-- Power Adapter (Power Cord)
-- 32 Gigabyte (or more) SD card and SD card reader, I would reccommend an SSD instead of an SD card if you’d like to get the best performance and shelf life out of your node, but an SD card is fine to start with.
-- An HDMI cable if you’d like to hook your Pi directly up to a monitor or TV. 
+- 树莓派3+或更高版本
+- 电源适配器（电源线）
+- 32 GB（或更多）SD卡和SD卡读卡器，如果您希望节点获得最佳性能，我建议您使用SSD。
+- 如果您想将树莓派直接连接到显示器或电视，请使用HDMI线。 
 
-If you don’t already have a Raspberry Pi, I’d recommend buying a kit or bundle which will come with everything you'll need. These usually run between $60 to $100 online, depending on what model you go for.
+如果您还没有树莓派，我建议您购买所需的工具包或捆绑包。这些通常在在60美元至100美元之间，具体取决于您要购买的型号。
 
-> ### Walkthrough Begins Here
+> ### 让我们开始设置吧
 
-#### Step 1. Download Raspberry Pi Imager
+#### 步骤一. 下载Raspberry Pi Imager
 
-- Plug your SD card or SSD into your computer. We will be installing the Raspberry Pi OS. Download a program called the [Raspberry Pi Imager](https://www.raspberrypi.org/downloads/) and install it. Choose your operating system (default is fine), choose your SD card (be careful not to pick anything else) and click write.
+- 将SD卡或SSD插入计算机。我们将安装Raspberry Pi OS。下载一个名为[Raspberry Pi Imager](https://www.raspberrypi.org/downloads/)的程序并安装。选择您的操作系统（可以默认），选择您的SD卡（注意不要选择其它任何东西），然后单击“写入”。
 
-- Once finished right click on the drive and click eject.
+- 完成后弹出可移动磁盘。
 
-You’ll need to decide if you want to set your pi up “headless” meaning you access your pi remotely without having to plug in a mouse, keyboard, and monitor, or you can choose to plug everything in and connect your pi to a tv or monitor with an HDMI cable. I would reccommend taking the time to learn how to SSH in and configure VNC in order to more easily check up on your node.
+您需要确定是否要将树莓派设置为“远程连接”，这意味着您无需插入鼠标，键盘和显示器即可远程访问，或者可以选择插上所有外设并将树莓派连接到电视或带HDMI的显示器。我建议您花一些时间来学习如何SSH和配置VNC，它们可以让你更轻松的检查节点。
 
-#### Step 2. Headless Setup
+#### 步骤二. 远程连接
 
-- For the headless setup, plug your SD card or SSD back in. **you’ll need to create a blank file in your boot drive titled** ```ssh```
+- 对于远程连接，请重新插入SD卡或SSD。 **您需要在里面创建一个名为** ```ssh```的文本文件
 
-- If you plan on **sshing into your pi wirelessly**, there’s another step where you need to create a file titled ```wpa_supplicant.conf``` and input the following in the document:
+- 如果您打算通过**无线方式将ssh放入树莓派中**，则需要创建一个标题为的文件，```wpa_supplicant.conf```并在文档中输入以下内容：
 
 ```
 country=US
@@ -54,47 +54,46 @@ network={
   key_mgmt=WPA-PSK
 }
 ```
-Of course you need to input your own country, ssid (Network name), and your own network password.
+您需要输入您自己的国家/地区，ssid（网络名称）和您自己的网络密码。
 
-- Save the file once you are done.
+- 完成后保存文件。
 
-- Right click the drive and click eject.
+- 弹出可移动磁盘。
 
-- Plug your SD card into your Pi, plug in the power, plug in your ethernet cable (if needed), and boot up your pi.
+- 将SD卡插入树莓派，插入电源，插入网线，然后启动树莓派。
 
 
-If you are doing this process directly connecting your pi to a monitor, you should see the pi boot up and you’ll be presented with the homescreen.
+如果您将树莓派直接连接到显示器，则应该会看到树莓派启动画面，并显示其主屏幕。
 
-#### Step 3. Putty and VNC
+#### 步骤三. Putty和VNC
 
-If you are doing a headless setup you will need to download a program called [PUTTY](https://putty.org/). This program will allow us to access our pi, and control it via command line after it has booted.
+如果您要进行远程连接设置，需要下载一个名为[PUTTY](https://putty.org/)的程序。该程序将允许我们访问树莓派，并在启动后通过命令行对其进行控制。
 
-- In PUTTY, enter ```raspberrypi.local``` and click enter. Click connect past the precaution.
-You’ll be prompted to enter a Username and Password. The default username is ``` pi```  and the password is ``` raspberry```  (all lowercase).
+- 在PUTTY中，输入 ```raspberrypi.local``` 并单击Enter。单击“注意事项”后的“连接”。系统将提示您输入用户名和密码。默认的用户名是``` pi``` ，默认密码是``` raspberry```（全部小写）。
 
-Congrats, you have just SSHed into your pi.
+如果一切顺利那您已经通过SSH登录到树莓派。
 
-If you tried to connect wirelessly and it couldn't find a host, you may need to plug in your pi directly to a monitor and manually enter your network passphrase when prompted. You can also just go directly through ethernet, which is the easier option.
+如果您尝试远程连接而找不到主机，则可能需要将树莓派直接插入显示器，并在出现提示时手动输入网络密码。
 
-Now we need to enable VNC.
+现在我们需要启用VNC。
 
-- In the command line Run
+- 在命令行中输入
 
 ```sudo raspi-config```
 
-- Select **Interfacing Options** 
+- 选择 **接口选项(Interfacing Options）** 
 
-- Select **VNC**
+- 选择 **VNC**
 
-- Press yes, then okay, then finished.
+- 确定.
 
-Next we'll set the resolution for VNC. (This step isn't needed, it's just to change the resolution)
+接下来，我们将设置VNC的分辨率。（不需要此步骤，只需更改分辨率即可）
 
-- Run:
+- 输入:
 
 ```sudo nano /boot/config.txt```
 
-- Add the following text to the document:
+- 将以下文本添加到文档中：
 ```
 framebuffer_width=1900
 framebuffer_height=1024
@@ -102,116 +101,114 @@ framebuffer_height=1024
 
 
 
-Now download, install and launch [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/)
+安装并启动 [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/)
 
-- Select New connection from the File menu
+- 从文件菜单中选择新建连接
 
-- Enter ```raspberrypi.local``` in the "VNC Server" field
+- 在“VNC服务器”栏输入 ```raspberrypi.local``` 
 
-- Click Ok.
+- 单击确定。
 
-- Double-click on the connection icon to connect.
+- 双击连接图标进行连接。
 
-- Click Ok if you are shown a security warning.
+- 如果显示安全警告，请单击“确定”。
 
-- Enter the Pi's username and password when prompted. The defaults are username: ``` pi```  and password: ``` raspberry```  Click Ok.
+- 出现提示时输入树莓派的用户名和密码。默认值为用户名：``` pi``` 和密码：``` raspberry```  点击确定。
 
-#### Step 4. Initial Configuration 
+#### 第四步. 初始配置
 
-Your Raspberry Pi desktop will then appear in a window on your main computer's desktop. You'll be able to control everything from there.
+树莓派桌面将出现在主计算机桌面上的一个窗口中。您将可以从那里控制一切。
 
-- Click past the SSH warning (if it shows up).
+- 点击SSH warning (如果不显示).
 
-- Set your country as needed.
+- 根据需要设置您的国家。
 
-- Change your Pi account’s password when prompted
+- 出现提示时更改您的树莓派帐户的密码
 
-- You can configure your wi-fi at this point, if needed.
+- 如果需要，您可以在此时配置wi-fi。
 
-- Update your Pi.
+- 更新您的树莓派。
 
-- Reboot your Pi when prompted.
+- 出现提示时重新启动您的树莓派。
 
-If you’re doing this over VNC you’ll need to reconnect once the pi has re-booted.
+如果通过VNC执行此操作，则在树莓派重新启动后，您需要重新连接。
 
-Now we need to download the DCR installer.
+现在，我们需要下载DCR安装程序。
 
-#### Step 5. Download and run dcrinstall
+#### 步骤5. 下载并运行dcrinstall
 
-- Open the Web Browser (Top left).
+- 打开Web浏览器（左上方）。
 
-- Navigate to the decred.org website.
+- 导航至decred.org网站。
 
-Scroll down and look for the green "Stable V1.5.1" button.
+向下滚动并查找绿色的“ Stable V1.5.1”按钮。
 
-Newer releases will be a different version.
+单击此按钮将带我们进入Decred的github下载页面。
 
-Clicking this will bring us to Decred's github releases page.
+- 下载 ```dcrinstall-linux-arm-v1.5.1```
 
-- Download ```dcrinstall-linux-arm-v1.5.1```
+可能会有较新的版本，确保下载最新版本。
 
-Again, there may be a newer version out. Make sure to download the latest version.
+- 我们需要将文件设置为可执行文件。打开树莓派终端。
 
-- We'll need to set the file as an exectuable. Open the Pi Terminal.
+- 输入 ```cd ~/Downloads/```
 
-- Run ```cd ~/Downloads/```
+- 输入 ```sudo chmod u+x dcrinstall-linux-arm-v1.5.1```
 
-- Run ```sudo chmod u+x dcrinstall-linux-arm-v1.5.1```
+- 导航到您的下载文件夹。双击安装程序，在终端中执行安装程序
 
-- Navigate to your downloads folder. Double click the installer, execute the installer in Terminal
+下载和设置所有文件将花费几分钟。现在，名为./decred的文件夹已放置在您的主目录中。
 
-It will take a few minutes to download and setup all the files. A folder called ./decred has now been placed in your home directory. 
+可能会要求您输入新钱包的密码。输入密码。记住，我们只是将其作为节点而不是钱包。
 
-It may ask you to input a password for a new wallet. Enter a password. Remember, we're just using this as a node and not as a wallet.
+- 键入n以获取公共数据
 
-- Type n for public data
+- 输入n种子
 
-- Hit n for Seed
+- 我们不会将其用作钱包，所以不要写下种子。
 
-- We're not using this as a wallet so don't write down the seed.
-
-- Hit okay for the seed.
+- 按okey
 
 
-Wait for it to finish.
+等待它完成。
 
 
-Now we can start the node:
+现在我们可以启动节点：
 
-- Open the terminal.
+- 打开终端
 
-- Run:
+- 输入:
  
 ```
 cd ./decred/decred-linux-arm-v1.5.1
 ./dcrd
 ```
 
-Make sure to change the version number if the current version is no longer v1.5.1 (e.g v1.6.0)
+如果当前版本不再是v1.5.1（例如v1.6.0），请下载最新版本。
 
-The Decred daemon will boot up and start connecting to peers
+Decred守护程序将启动并开始连接到其它全节点
 
-If you see that your node has successfully booted, hit control+c so we can finish by enabling TOR.
+如果您看到您的节点已成功启动，请按Control + c，以便我们可以通过启用TOR来完成。
 
-If you do not wish to run TOR, make sure to forward the 9108 Port. If you choose to TOR, you won't need to do any port forwarding.
+如果您不想运行TOR，请确保转发9108端口。如果选择TOR，则无需进行任何端口转发。
 
-> ### Installing and Configuring TOR
+> ### 安装和配置TOR
 
-TOR is free and open-source software for enabling anonymous communication.
+TOR是免费的开源软件，用于匿名通信。
 
-If you'd like a more in-depth explanation of what all of the commands do I'd reccommend checking out Kozel's Guide: [guide on setting up TOR](https://github.com/artikozel/decred-articles/blob/master/English/howilearnedtostopworryingandlovethecli/part2-configuringtor.md)
+如果您想对所有命令有更深入的了解，我建议您查阅[《Kozel指南：设置TOR指南》](https://github.com/artikozel/decred-articles/blob/master/English/howilearnedtostopworryingandlovethecli/part2-configuringtor.md)
 
-Lets Start.
+开始设置.
 
-- Open the Raspberry pi terminal:
+- 打开树莓派终端:
 
-- Run ```sudo apt install tor```
+- 输入 ```sudo apt install tor```
 
-- Press y to continue
+- 按y继续
 
-- Run  ```sudo nano /etc/tor/torrc```
+- 输入  ```sudo nano /etc/tor/torrc```
 
-- Add the following text at the top:
+- 在顶部添加以下文本：
 ```
 SocksPort 9050
 SocksPort raspberrypi.local:9050
@@ -222,45 +219,40 @@ HiddenServiceVersion 2
 HiddenServicePort 9108 127.0.0.1:9108
 ```
 
-Press Control and X at the same time when you are finished. Save to the same file location.
-Hit enter to continue.
+完成后，请同时按Control和X。保存到相同的文件位置。按Enter键继续。
 
-- Restart the tor service with ```sudo systemctl restart tor@default.service```
+- 重新启动Tor服务 ```sudo systemctl restart tor@default.service```
 
-- Check Status to see if its working ```sudo systemctl status tor@default.service```
+- 检查状态以查看其是否正常工作 ```sudo systemctl status tor@default.service```
 
-(Exit view with ctrl+C)
+（使用ctrl + C返回）
 
-- Run ```sudo cat /var/lib/tor/dcrd/hostname```
+- 输入 ```sudo cat /var/lib/tor/dcrd/hostname```
 
-- Save your .onion **we will need it for the next step.**
+- 保存您的.onion， **我们将在下一步中使用它。**
 
-- Run ```nano .dcrd/dcrd.conf```
+- 输入 ```nano .dcrd/dcrd.conf```
 
-Edit the top of the file with:
+使用以下命令编辑文件的顶部：
 ```
 proxy=127.0.0.1:9050
 listen=127.0.0.1
 externalip=Your-Onion-From-Above.onion
 torisolation=1
 ```
-Press Control+X to exit.
+按Control + X保存退出。
 
-Save file
-
-Run your Decred node with
+使用以下命令运行Decred节点
 
 ```
 cd
 cd ./decred/decred-linux-arm-v1.5.1
 ./dcrd
 ```
-The Node will need lots of time to download and sync. Currently the Decred Blockchain is 4.2 Gigabytes in size.
+节点将需要大量时间来下载和同步。目前，Decred区块链的大小为4.2 GB。
 
+当您开始看到日志显示**(inbound)**时，表明您的节点正在接受对等连接，现在您正式加入Decred网络帮助网络更具强度。即使一切配置正确，平均几天也不会看到入站conns。该网络的设计目的是使具有良好记录的节点优先于新节点，以帮助防止不良行为者触发一堆恶意节点之类的事情。
 
-When you start seeing logs saying **(inbound)** it means your node is accepting peer connections and now you’re officially part of the Decred network, helping it grow. Even if everything is configured properly, you won't see inbound conns for several days on average.
-The network is intentionally designed to favor nodes that have a track record over new nodes to help prevent things like a bad actor firing up a bunch of malicious nodes.
+如果您的Pi断电，请确保将其重新启动并重新运行dcrd。经常使用VNC检查树莓派也是一个好主意。
 
-If your Pi ever loses power, make sure to reboot it and re-run dcrd. It's also a good idea to use VNC to check up on your Pi every so often. 
-
-Make sure you follow the Decred Project so you don't miss any new releases.
+确保关注Decred中文社区，这样您就不会错过任何新版本。
