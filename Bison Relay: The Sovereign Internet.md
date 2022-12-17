@@ -31,13 +31,13 @@ Building Bison Relay took roughly 2 years and started in fall of 2020, where I p
 
 The motivation and features of Bison Relay should be relatively clear from the above, so it is time to review how these major features were implemented from an engineering standpoint.
 
-Bison Relay was built using code from our existing secure communications tool, zkc, where work began by removing the client and server notions of a client account. Correspondingly, Bison Relay has inherited the various security features from zkc like Double Ratchet message and header encryption, postquantum-secure Public Key Infrastructure, and a simple CLI client and server.
-To limit DoS attacks against the message send and receive paths on the server, each such action requires a preceding corresponding micropayment from the client to the server.
-A new peer-to-peer process for clients to connect to new peers was added, where ratchet initiation between peers is done either via OOB invite or mediated by 1 or more intermediate peers, rather than using a server.
+- Bison Relay was built using code from our existing secure communications tool, [zkc](https://github.com/companyzero/zkc/), where work began by removing the client and server notions of a client account. Correspondingly, Bison Relay has inherited [the various security features from zkc](https://blog.decred.org/2016/12/07/zkc-Secure-Communications/) like Double Ratchet message and header encryption, postquantum-secure Public Key Infrastructure, and a simple CLI client and server.
+- To limit DoS attacks against the message send and receive paths on the server, each such action requires a preceding corresponding micropayment from the client to the server.
+- A new peer-to-peer process for clients to connect to new peers was added, where ratchet initiation between peers is done either via OOB invite or mediated by 1 or more intermediate peers, rather than using a server.
 
 ## No accounts
 
-Removing accounts from zkc was a bit tricky because of how zkc uses a Double Ratchet to encrypt and decrypt all messages. In zkc, as with most other chat protocols, the server routes messages from user A to user B, and any missed messages can lead to the ratchet state getting out of sync and needing to be reset. We decided to use the ratchet state as the basis for a unique per-message identifier, so the ratchet state, which is already shared between 2 peers, could be used as the basis for routing in addition to message encryption. To do this, we took the header encryption key from the Double Ratchet, which is not unique per message, and adjusted it to be unique per message using HMAC. By taking a unique per-message header encryption key and hashing it, we can derive a unique identifier for each message that both peers using a ratchet can track. This process was inspired by Jonathan Logan’s coverage of dropgangs, where black market items are sold online using cryptocurrency and dropped in locations that are later disclosed to the buyers for retrieval.
+Removing accounts from zkc was a bit tricky because of how zkc uses a Double Ratchet to encrypt and decrypt all messages. In zkc, as with most other chat protocols, the server routes messages from user A to user B, and any missed messages can lead to the ratchet state getting out of sync and needing to be reset. We decided to use the ratchet state as the basis for a unique per-message identifier, so the ratchet state, which is already shared between 2 peers, could be used as the basis for routing in addition to message encryption. To do this, we took the header encryption key from the Double Ratchet, which is not unique per message, and adjusted it to be unique per message using HMAC. By taking a unique per-message header encryption key and hashing it, we can derive a unique identifier for each message that both peers using a ratchet can track. This process was inspired by [Jonathan Logan’s coverage of dropgangs](https://pca.st/7xws4p19), where black market items are sold online using cryptocurrency and dropped in locations that are later disclosed to the buyers for retrieval.
 
 ## Embedded LN and paying per message
 
@@ -47,13 +47,14 @@ Once accounts are no longer linked to messages, clients uploading and downloadin
 
 Typical social media or chat services have a database table of their users, so user A can request to be connected with user B and the server routes the messages. Since we have engineered out the server-based routing of messages and instead use client-based routing, clients must connect with each other without the use of a server “phonebook”, i.e. lookup table. Clients may connect either via OOB invite, which can be sent over other chat or relay networks, preferably via a secure channel, or via Bison Relay directly using mediated key exchanges. This mediated key exchange process would occur roughly as follows:
 
-Bob is in contact with Alice and Carol, but Alice and Carol are not in contact over Bison Relay.
-Bob posts something that both Alice and Carol can see.
-Alice makes a comment on the post.
-Carol sees Alice’s comment on the post.
-Carol decides to initiate a mediated key exchange to connect directly with Alice.
-Bob mediates the key exchange requested by Carol with Alice.
-Carol and Alice are connected directly.
+- Bob is in contact with Alice and Carol, but Alice and Carol are not in contact over Bison Relay.
+- Bob posts something that both Alice and Carol can see.
+- Alice makes a comment on the post.
+- Carol sees Alice’s comment on the post.
+- Carol decides to initiate a mediated key exchange to connect directly with Alice.
+- Bob mediates the key exchange requested by Carol with Alice.
+- Carol and Alice are connected directly.
+
 A similar process can occur across several intermediate peers that exist in between the 2 peers that are attempting to connect. Mediated key exchanges avoid the need for an authoritative lookup table by reverting to the “old” meatspace model of meeting people, where you’re introduced to new people via people you already know.
 
 Analogous to reposting on various existing social media platforms, clients can “relay” another client’s post to their own followers. If several clients relay a single post in a series, the scenario described above with several intermediate peers existing between 2 peers attempting to connect can occur.
@@ -64,21 +65,23 @@ Bison Relay represents a major architectural shift in how communications platfor
 
 The obvious:
 
-The audience for credibly-neutral social media infrastructure may find Bison Relay an attractive option. There is no server operator or central planner who can arbitrarily turn off your account, unlike almost every other social media plaform. Clients are sovereign over their communications and networks.
-Using Bison Relay requires possessing a small amount of Decred, e.g. 0.1 DCR. This will generate demand for Decred across a wider audience that previously did not exist.
-Networks built on Bison Relay are surveillance- and censorship-resistant, reducing many issues originating from malicious advertiser, server operator, and government actions.
-An existing Bison Relay client can be used to onboard new clients via invites and sending small amounts of Decred on-chain to fund new clients’ channels. Users are onboarded by their friends and associates, tying telecommunications to users’ existing social networks.
-Bison Relay will drive growth and decentralization in Decred LN. Just like the internet started with a few nodes, LN hubs can be added in more locations to spread out the load.
+- The audience for credibly-neutral social media infrastructure may find Bison Relay an attractive option. There is no server operator or central planner who can arbitrarily turn off your account, unlike almost every other social media plaform. Clients are sovereign over their communications and networks.
+- Using Bison Relay requires possessing a small amount of Decred, e.g. 0.1 DCR. This will generate demand for Decred across a wider audience that previously did not exist.
+- Networks built on Bison Relay are surveillance- and censorship-resistant, reducing many issues originating from malicious advertiser, server operator, and government actions.
+- An existing Bison Relay client can be used to onboard new clients via invites and sending small amounts of Decred on-chain to fund new clients’ channels. Users are onboarded by their friends and associates, tying telecommunications to users’ existing social networks.
+- Bison Relay will drive growth and decentralization in Decred LN. Just like the internet started with a few nodes, LN hubs can be added in more locations to spread out the load.
+
 The subtle:
 
-Unlike most tech corporations, we do not need hundreds of thousands or millions of users on Bison Relay for it to substantially magnify the value proposition for Decred. Bison Relay is built to grow via word of mouth. Just the prospect of a Signal-like system without the requirement of phone number metadata and a low cost is a draw.
-Most existing web infrastructure can be replicated on Bison Relay, e.g. pages, ecommerce, and paid subscriptions. This is a work-in-progress and there should be something to demonstrate in the next several weeks. Think bricks and mortar stores, Patreon, Substack, Soundcloud, and OnlyFans without the questionable platform fees and restrictions.
-Bison Relay has no authoritative naming system on purpose. As soon as there is a public directory, it is not possible to attribute spam to a source. By having no phonebook in Bison Relay, the path of spamming users and spam is always attributable.
-Decred has had difficulty obtaining substantive fiat exchange listings, so Bison Relay creates an informal way around this barrier by facilitating localized purchases of Decred, either via cash or other means.
-It is difficult to capture all the various implications of Bison Relay, so feel free to communicate with us about it via chat or other communication channels.
+- Unlike most tech corporations, we do not need hundreds of thousands or millions of users on Bison Relay for it to substantially magnify the value proposition for Decred. Bison Relay is built to grow via word of mouth. Just the prospect of a Signal-like system without the requirement of phone number metadata and a low cost is a draw.
+- Most existing web infrastructure can be replicated on Bison Relay, e.g. pages, ecommerce, and paid subscriptions. This is a work-in-progress and there should be something to demonstrate in the next several weeks. Think bricks and mortar stores, Patreon, Substack, Soundcloud, and OnlyFans without the questionable platform fees and restrictions.
+- Bison Relay has no authoritative naming system on purpose. As soon as there is a public directory, it is not possible to attribute spam to a source. By having no phonebook in Bison Relay, the path of spamming users and spam is always attributable.
+- Decred has had difficulty obtaining substantive fiat exchange listings, so Bison Relay creates an informal way around this barrier by facilitating localized purchases of Decred, either via cash or other means.
+
+It is difficult to capture all the various implications of Bison Relay, so feel free to communicate with us about it via [chat](https://chat.decred.org/) or other [communication channels](https://decred.org/community/).
 
 ## Conclusion
 
 Bison Relay is a years-long effort of mine to use cryptocurrency to create a platform for free speech and free association. Back in 2017, I had idly wondered how this was possible, and 5 years later we have a working product with a nice user interface. The years since fall 2017 have been unpleasant as we soldiered forward through malicious miners manipulating our markets, persistent coordinated trolling campaigns, trade media blacklisting, and acute Twitter censorship. With the release of Bison Relay, Decred and any other individuals or groups that are being actively censored on other platforms can begin to build their own sovereign internet of content, ideas, and capital. Decred is money evolved and Bison Relay is internet evolved.
 
-Come join us on Bison Relay and build your own sovereign internet. The revolution will not be custodial, censored, or surveilled.
+[Come join us on Bison Relay](https://bisonrelay.org/)) and build your own sovereign internet. The revolution will not be custodial, censored, or surveilled.
