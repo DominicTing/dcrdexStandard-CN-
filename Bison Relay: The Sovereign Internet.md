@@ -1,4 +1,4 @@
-# Bison Relay: The Sovereign Internet
+# Bison Relay: 主权互联网
 
 ![](img/WX20221217-131225@2x.png)
 
@@ -84,4 +84,4 @@ It is difficult to capture all the various implications of Bison Relay, so feel 
 
 Bison Relay is a years-long effort of mine to use cryptocurrency to create a platform for free speech and free association. Back in 2017, I had idly wondered how this was possible, and 5 years later we have a working product with a nice user interface. The years since fall 2017 have been unpleasant as we soldiered forward through malicious miners manipulating our markets, persistent coordinated trolling campaigns, trade media blacklisting, and acute Twitter censorship. With the release of Bison Relay, Decred and any other individuals or groups that are being actively censored on other platforms can begin to build their own sovereign internet of content, ideas, and capital. Decred is money evolved and Bison Relay is internet evolved.
 
-[Come join us on Bison Relay](https://bisonrelay.org/)) and build your own sovereign internet. The revolution will not be custodial, censored, or surveilled.
+[Come join us on Bison Relay](https://bisonrelay.org/) and build your own sovereign internet. The revolution will not be custodial, censored, or surveilled.
