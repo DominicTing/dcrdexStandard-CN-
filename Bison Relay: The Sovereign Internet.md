@@ -4,32 +4,32 @@
 
 来自 JAKE YOCOM-PIATT 
 
-Today I am releasing a new Decred-based communications tool, [Bison Relay](https://bisonrelay.org/), that enables free speech, free association, and can act as a fully independent alternative stack to the web, [whose substantial problems were outlined in my prior article](https://blog.decred.org/2022/12/09/Trapped-in-the-Web/). Bison Relay is an asynchronous client-server protocol that makes heavy use of the Decred Lightning Network (“LN”), where every message sent is encrypted, metadata-minimized, and paid for via LN micropayment. The Bison Relay server is accountless and every message is handled individually, where it is both paid for prior to being sent and then received. Bison Relay tightly integrates payments, messaging, and social media, and this initial release implements a peer-to-peer Twitter/Facebook-like functionality of making posts to subscribers, subscribing to users’ posts, relaying posts, and replying to posts and comments on posts.
+今天，我发布了一个新的基于 Decred 的通信工具，[Bison Relay](https://bisonrelay.org/)，它支持言论自由、自由链接，并且可以作为一个完全独立的网络替代堆栈。我在之前的文章中概述了[现如今网络的实质性问题](https://blog.decred.org/2022/12/09/Trapped-in-the-Web/). Bison Relay 是一种异步客户端-服务器协议，它大量使用 Decred 闪电网络（“LN”），其中发送的每条消息都经过加密、元数据最小化，并可以通过 LN 进行小额支付。Bison Relay 服务器是无账户的，每条消息都是单独处理的，在发送和接收之前都需要付费。Bison Relay 紧密集成了支付、消息传递和社交媒体，这个初始版本实现了类似于 Twitter/Facebook 的点对点功能，可以向订阅者发帖、订阅用户的帖子、转发帖子以及回复帖子和评论帖子。
 
-In reasoning outlined below, it will become clear why free speech requires this micropayment-based architecture. While LN comes with its own complexity, Bison Relay can effectively replace 4 of the 5 protocols and stacks mentioned in the prior article - DNS, HTTP, SMTP, and TLS – where the existing Decred LN and on-chain payments replace fiat payment infrastructure. The rampant and aggressive nature of surveillance and censorship on the web is a sign the web is in dire need of a redesign, and Bison Relay supplies that redesign in the form of a fundamentally peer-to-peer encrypted content relay network. For a very small amount of Decred, e.g. 0.1 DCR, users can access free, sovereign, and private speech via Bison Relay for many months.
+在下面的概述中，将清晰的展示为什么言论自由需要这种基于微支付的架构。虽然 LN 有其自身的复杂性，但 Bison Relay 可以有效地取代上一篇文章中提到的 5 种协议和堆栈中的 4 种——DNS、HTTP、SMTP 和 TLS——其中现有的 Decred LN 和链上支付替代了法定支付基础设施。网络监控和审查的猖獗和侵略性表明网络迫切需要重新设计，而 Bison Relay 以基本对等加密内容中继网络的形式提供重新设计。使用非常少量的 Decred，例如 0.1 DCR，用户可以通过 Bison Relay 访问免费、主权和私人交流数月。
 
-This initial release includes both a graphical user interface (“GUI”) client for Windows, MacOS, and Linux and a command line interface (“CLI”) client for most platforms.
+此初始版本适用于 Windows、MacOS 和 Linux 的图形用户界面（“GUI”）客户端和适用于大多数平台的命令行界面（“CLI”）客户端。
 
-## Reasoning and Design
+## 设计与论证
 
-Bison Relay has been developed under the threat model of assuming that a powerful adversary controls major components of the infrastructure, which is standard for major Decred features, e.g. Proof-of-Stake governance, StakeShuffle privacy, or DCRDEX atomic swap exchange. A key observation that has guided the architecting of Bison Relay is that custody of user data and metadata by server operators is used to censor and surveil users, so the broad approach is to aggressively minimize the accessibility and custody of user data and metadata by server operators.
+Bison Relay 是在假设有强大对手控制的基础设施主要组件的威胁模型下开发的，这是 Decred 主要功能的标准，例如权益证明治理、StakeShuffle 隐私或 DCRDEX 原子交换。指导 Bison Relay 架构的一个关键观察是服务器运营商对用户数据和元数据的保管被用来审查和监视用户，因此主要的方法是积极地减少服务器运营商对用户数据和元数据的可访问性和保管.
 
-The design process for Bison Relay can be described clearly by the following series of observations:
+Bison Relay 的设计过程可以通过以下一系列观察清楚地描述：
 
-- Assume the server operator is malicious and seeks to surveil and censor clients.
-- Per many other chat protocols, encrypt user messages by default using end-to-end encryption (“E2EE”). This prevents server operators from reading client messages.
-- Remove the server concept of a client account to minimize metadata tracking by server operators.
-- Reduce client message metadata to a dead minimum.
-- If a server operator cannot link data transfers to particular clients, it prevents traditional banning of malicious clients thereby creating a Denial of Service (“DoS”) vector.
-- In lieu of attempting to ban malicious clients, instead charge all clients a fee per message sent and received, where the fee is paid via LN.
-- Reduce server complexity to a dead minimum, where a server only checks that payments are made prior to receiving sent messages and prior to relaying messages to their recipient.
-- Clients connect to each other via out-of-band (“OOB”) invites or via invites mediated by links they have in common, e.g. Alice knows Bob, Bob knows Carol, so Bob introduces Alice to Carol.
+- 假设服务器运营商是恶意的，并试图监视和审查客户。
+- 根据许多其它聊天协议，默认情况下使用端到端加密（“E2EE”）来加密用户消息。这可以防止服务器操作员读取用户消息。
+- 删除用户帐户的服务器概念，以最大限度地减少服务器操作员对元数据的跟踪。
+- 将客户端消息元数据减少到最低限度。
+- 如果服务器运营商无法将数据传输链接到特定客户端，它会阻止传统的恶意客户端禁令，从而产生拒绝服务（“DoS”）。
+- 迭代垃圾信息接收方式，向所有用户收取每条发送和接收的消息的费用，费用是通过闪电网络支付的。
+- 将服务器的复杂性降低到最低限度，其中服务器仅在接收发送的消息之前以及将消息转发给收件人之前检查是否已付款。
+- 客户端通过带外（“OOB”）邀请或通过由他们共有的链接调解的邀请相互连接，例如，Alice 认识 Bob，Bob 认识 Carol，因此 Bob 将 Alice 介绍给 Carol。
 
-Building Bison Relay took roughly 2 years and started in fall of 2020, where I proposed the original concept, Marco Peereboom and I did the initial design work, and Marco did all the early development for a CLI client and server. Going from a working CLI proof-of-concept to a finished product, which included all the LN payment integration, a cross-platform GUI, and server backend resdesign, was done by Miki Totefu, Dave Collins, David Hill, and Alex Yocom-Piatt. Bison Relay has been in a private beta test for several months now, and has only had a few bugs fixed and is stable.
+构建 Bison Relay 大约花了 2 年时间，从 2020 年秋季开始，我提出了最初的概念，Marco Peereboom 和我完成了初始设计工作，Marco 完成了 CLI 客户端和服务器的所有早期开发。从有效的 CLI 概念验证到成品，包括所有 LN 支付集成、跨平台 GUI 和服务器后端重新设计，由 Miki Totefu、Dave Collins、David Hill 和 Alex Yocom 完成。Bison Relay 已经进行了几个月的私人 Beta 测试，只修复了一些bug并且其很稳定。
 
-## Implementation
+## 执行
 
-The motivation and features of Bison Relay should be relatively clear from the above, so it is time to review how these major features were implemented from an engineering standpoint.
+Bison Relay 的动机和特点从上面应该已经比较清楚了，那么是时候从工程的角度来回顾一下这些主要特性是如何实现的了。
 
 - Bison Relay was built using code from our existing secure communications tool, [zkc](https://github.com/companyzero/zkc/), where work began by removing the client and server notions of a client account. Correspondingly, Bison Relay has inherited [the various security features from zkc](https://blog.decred.org/2016/12/07/zkc-Secure-Communications/) like Double Ratchet message and header encryption, postquantum-secure Public Key Infrastructure, and a simple CLI client and server.
 - To limit DoS attacks against the message send and receive paths on the server, each such action requires a preceding corresponding micropayment from the client to the server.
