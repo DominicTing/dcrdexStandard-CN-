@@ -1,5 +1,7 @@
 ## Bison Relay: The Sovereign Internet
 
+![](img/WX20221217-131002@2x.png)
+
 BY JAKE YOCOM-PIATT ON DECEMBER 14, 2022
 
 Today I am releasing a new Decred-based communications tool, Bison Relay, that enables free speech, free association, and can act as a fully independent alternative stack to the web, whose substantial problems were outlined in my prior article. Bison Relay is an asynchronous client-server protocol that makes heavy use of the Decred Lightning Network (“LN”), where every message sent is encrypted, metadata-minimized, and paid for via LN micropayment. The Bison Relay server is accountless and every message is handled individually, where it is both paid for prior to being sent and then received. Bison Relay tightly integrates payments, messaging, and social media, and this initial release implements a peer-to-peer Twitter/Facebook-like functionality of making posts to subscribers, subscribing to users’ posts, relaying posts, and replying to posts and comments on posts.
