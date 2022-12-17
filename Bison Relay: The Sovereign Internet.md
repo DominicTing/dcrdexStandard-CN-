@@ -4,7 +4,7 @@
 
 来自 JAKE YOCOM-PIATT 
 
-今天，我发布了一个新的基于 Decred 的通信工具，[Bison Relay](https://bisonrelay.org/)，它支持言论自由、自由链接，并且可以作为一个完全独立的网络替代堆栈。我在之前的文章中概述了[现如今网络的实质性问题](https://blog.decred.org/2022/12/09/Trapped-in-the-Web/). Bison Relay 是一种异步客户端-服务器协议，它大量使用 Decred 闪电网络（“LN”），其中发送的每条消息都经过加密、元数据最小化，并可以通过 LN 进行小额支付。Bison Relay 服务器是无账户的，每条消息都是单独处理的，在发送和接收之前都需要付费。Bison Relay 紧密集成了支付、消息传递和社交媒体，这个初始版本实现了类似于 Twitter/Facebook 的点对点功能，可以向订阅者发帖、订阅用户的帖子、转发帖子以及回复帖子和评论帖子。
+今天，我发布了一个新的基于 Decred 的通信工具，[Bison Relay](https://bisonrelay.org/)，它支持言论自由、自由联通，并且可以作为一个完全独立的网络替代堆栈。我在之前的文章中概述了[现如今网络的实质性问题](https://blog.decred.org/2022/12/09/Trapped-in-the-Web/). Bison Relay 是一种异步客户端-服务器协议，它大量使用 Decred 闪电网络（“LN”），其中发送的每条消息都经过加密、元数据最小化，并可以通过 LN 进行小额支付。Bison Relay 服务器是无账户的，每条消息都是单独处理的，在发送和接收之前都需要付费。Bison Relay 紧密集成了支付、消息传递和社交媒体，这个初始版本实现了类似于 Twitter/Facebook 的点对点功能，可以向订阅者发帖、订阅用户的帖子、转发帖子以及回复帖子和评论帖子。
 
 在下面的概述中，将清晰的展示为什么言论自由需要这种基于微支付的架构。虽然 LN 有其自身的复杂性，但 Bison Relay 可以有效地取代上一篇文章中提到的 5 种协议和堆栈中的 4 种——DNS、HTTP、SMTP 和 TLS——其中现有的 Decred LN 和链上支付替代了法定支付基础设施。网络监控和审查的猖獗和侵略性表明网络迫切需要重新设计，而 Bison Relay 以基本对等加密内容中继网络的形式提供重新设计。使用非常少量的 Decred，例如 0.1 DCR，用户可以通过 Bison Relay 访问免费、主权和私人交流数月。
 
@@ -31,57 +31,57 @@ Bison Relay 的设计过程可以通过以下一系列观察清楚地描述：
 
 Bison Relay 的动机和特点从上面应该已经比较清楚了，那么是时候从工程的角度来回顾一下这些主要特性是如何实现的了。
 
-- Bison Relay was built using code from our existing secure communications tool, [zkc](https://github.com/companyzero/zkc/), where work began by removing the client and server notions of a client account. Correspondingly, Bison Relay has inherited [the various security features from zkc](https://blog.decred.org/2016/12/07/zkc-Secure-Communications/) like Double Ratchet message and header encryption, postquantum-secure Public Key Infrastructure, and a simple CLI client and server.
-- To limit DoS attacks against the message send and receive paths on the server, each such action requires a preceding corresponding micropayment from the client to the server.
-- A new peer-to-peer process for clients to connect to new peers was added, where ratchet initiation between peers is done either via OOB invite or mediated by 1 or more intermediate peers, rather than using a server.
+- Bison Relay 是使用我们现有的安全通信工具[zkc](https://github.com/companyzero/zkc/)中的代码构建的，其中的工作从删除客户帐户的客户端和服务器概念开始。相应地，Bison Relay 继承了[zkc的各种安全特性](https://blog.decred.org/2016/12/07/zkc-Secure-Communications/)，如双棘轮算法和标头加密、后量子安全公钥基础设施以及简单的 CLI 客户端和服务器。
+- 为了限制针对服务器上的消息发送和接收路径的 DoS 攻击，每个此类操作都需要从客户端到服务器的预先进行相应的小额支付。
+- 添加了一个用于客户端连接到新对等节点的新对等过程，其中对等节点之间的棘轮启动是通过 OOB 邀请或由 1 个或多个中间对等节点调解完成的，而不是使用服务器。
 
-## No accounts
+## 无帐户
 
-Removing accounts from zkc was a bit tricky because of how zkc uses a Double Ratchet to encrypt and decrypt all messages. In zkc, as with most other chat protocols, the server routes messages from user A to user B, and any missed messages can lead to the ratchet state getting out of sync and needing to be reset. We decided to use the ratchet state as the basis for a unique per-message identifier, so the ratchet state, which is already shared between 2 peers, could be used as the basis for routing in addition to message encryption. To do this, we took the header encryption key from the Double Ratchet, which is not unique per message, and adjusted it to be unique per message using HMAC. By taking a unique per-message header encryption key and hashing it, we can derive a unique identifier for each message that both peers using a ratchet can track. This process was inspired by [Jonathan Logan’s coverage of dropgangs](https://pca.st/7xws4p19), where black market items are sold online using cryptocurrency and dropped in locations that are later disclosed to the buyers for retrieval.
+从 zkc 中删除帐户有点棘手，因为 zkc 使用双棘轮算法来加密和解密所有消息。在 zkc 中，与大多数其它聊天协议一样，服务器将消息从用户 A 路由到用户 B，任何错过的消息都可能导致棘轮状态不同步并需要重置。我们决定使用棘轮状态作为每个消息唯一标识符的基础，因此已经在 2 个对等方之间共享的棘轮状态可以用作消息加密之外的路由基础。为此，我们从 Double Ratchet 获取标头加密密钥（每条消息都不是唯一的），并使用 HMAC 将其调整为每条消息唯一。通过获取每个消息的唯一标头加密密钥并对其进行哈希处理，我们可以为使用棘轮的两个对等方可以跟踪的每条消息派生出的一个唯一标识符。在[乔纳森·洛根](https://pca.st/7xws4p19)的报道中，黑市商品使用加密货币在线销售，投放地点随后向买家披露以供检索。
 
-## Embedded LN and paying per message
+## 嵌入式闪电网络和按消息付费
 
-Once accounts are no longer linked to messages, clients uploading and downloading messages with the server must precede their actions with micropayments over LN. If this did not occur, malicious clients could run a DoS attack at a very low cost. Uploaded data is paid for by the byte and received messages are paid for by the message because in the first case disk space is the limited resource and in the second case the database load scales with message count. Sent messages are stored by the server for 30 days and then purged from its database (PostgreSQL), which may force ratchet resets for users who are offline for over 30 days at a time.
+一旦账户不再与消息相关联，客户端通过服务器上传和下载消息必须先通过闪电网络进行小额支付。如果这没有发生，恶意客户端可以以非常低的成本进行 DoS 攻击。上传的数据按字节付费，接收的消息按消息付费，因为在第一种情况下，磁盘空间是有限的资源，在第二种情况下，数据库负载会随着消息数的增加而增加。发送的消息由服务器存储 30 天，然后从其数据库 (PostgreSQL) 中清除，这可能会强制对一次离线超过 30 天的用户进行棘轮重置。
 
-## P2P social networking
+## P2P社交网络
 
-Typical social media or chat services have a database table of their users, so user A can request to be connected with user B and the server routes the messages. Since we have engineered out the server-based routing of messages and instead use client-based routing, clients must connect with each other without the use of a server “phonebook”, i.e. lookup table. Clients may connect either via OOB invite, which can be sent over other chat or relay networks, preferably via a secure channel, or via Bison Relay directly using mediated key exchanges. This mediated key exchange process would occur roughly as follows:
+典型的社交媒体或聊天服务有一个用户的数据库列表，因此用户 A 可以请求与用户 B 连接，并由服务器路由消息。由于我们设计了基于服务器的消息路由，而不是使用基于客户端的路由，因此客户端必须在不使用服务器“电话簿”（即查找表）的情况下相互连接。客户端可以通过 OOB 邀请进行连接，该邀请可以通过其它聊天或中继网络发送，最好是通过安全通道，或者直接使用中介密钥交换通过 Bison Relay 进行连接。这种中介密钥交换过程大致如下：
 
-- Bob is in contact with Alice and Carol, but Alice and Carol are not in contact over Bison Relay.
-- Bob posts something that both Alice and Carol can see.
-- Alice makes a comment on the post.
-- Carol sees Alice’s comment on the post.
-- Carol decides to initiate a mediated key exchange to connect directly with Alice.
-- Bob mediates the key exchange requested by Carol with Alice.
-- Carol and Alice are connected directly.
+- Bob 与 Alice 和 Carol 保持联系，但 Alice 和 Carol 没有通过 Bison Relay 联系。
+- Bob 发布了 Alice 和 Carol 都可以看到的内容。
+- Alice 对帖子发表评论。
+- Carol 看到 Alice 对该帖子的评论。
+- Carol 决定启动中介密钥交换以直接与 Alice 连接。
+- Bob 调解 Carol 与 Alice 请求的密钥交换。
+- Carol 与 Alice 直接相连。
 
-A similar process can occur across several intermediate peers that exist in between the 2 peers that are attempting to connect. Mediated key exchanges avoid the need for an authoritative lookup table by reverting to the “old” meatspace model of meeting people, where you’re introduced to new people via people you already know.
+类似的过程可能发生在试图连接的 2 个对等节点之间存在的多个中间对等节点上。中介密钥交换通过恢复到会见人的“旧”空间模型，避免了对权威查找表的需要，在这种模型中，您通过已经认识的人被介绍给新人。
 
-Analogous to reposting on various existing social media platforms, clients can “relay” another client’s post to their own followers. If several clients relay a single post in a series, the scenario described above with several intermediate peers existing between 2 peers attempting to connect can occur.
+类似于在各种现有社交媒体平台上转发，客户可以将另一个客户的帖子“转发”给自己的关注者。如果多个客户端中继一系列中的单个帖子，则可能会发生上述情况，其中 2 个尝试连接的对等点之间存在多个中间对等点。
 
-## Implications
+## 启示
 
-Bison Relay represents a major architectural shift in how communications platforms operate. There are both obvious and more subtle consequences of this architecture.
+Bison Relay 代表了通信平台运作方式的重大架构转变。这种架构有明显和更微妙的变化。
 
-The obvious:
+明显的:
 
-- The audience for credibly-neutral social media infrastructure may find Bison Relay an attractive option. There is no server operator or central planner who can arbitrarily turn off your account, unlike almost every other social media plaform. Clients are sovereign over their communications and networks.
-- Using Bison Relay requires possessing a small amount of Decred, e.g. 0.1 DCR. This will generate demand for Decred across a wider audience that previously did not exist.
-- Networks built on Bison Relay are surveillance- and censorship-resistant, reducing many issues originating from malicious advertiser, server operator, and government actions.
-- An existing Bison Relay client can be used to onboard new clients via invites and sending small amounts of Decred on-chain to fund new clients’ channels. Users are onboarded by their friends and associates, tying telecommunications to users’ existing social networks.
-- Bison Relay will drive growth and decentralization in Decred LN. Just like the internet started with a few nodes, LN hubs can be added in more locations to spread out the load.
+- 可靠中立的社交媒体基础设施的受众可能会发现 Bison Relay 是一个有吸引力的选择。与几乎所有其它社交媒体平台不同，没有服务器运营商或中央计划人员可以任意关闭您的帐户。客户对其通信和网络拥有主权。
+- 使用 Bison Relay 需要拥有少量的 Decred，例如 0.1 DCR。这将在以前不存在的更广泛的受众中产生对 Decred 的需求。
+- 建立在 Bison Relay 上的网络具有监视和审查抵抗力，减少了许多源自恶意广告商、服务器运营商和政府行为的问题。
+- 现有的 Bison Relay 客户端可用于通过邀请和在链上发送少量 Decred 来为新客户的渠道提供资金来吸引新客户。用户由他们的朋友和同事加入，将电信与用户现有的社交网络联系起来。
+- Bison Relay 将推动 Decred LN 的增长和去中心化。就像互联网从几个节点开始一样，LN 集线器可以添加到更多位置以分散负载。
 
-The subtle:
+微妙的:
 
-- Unlike most tech corporations, we do not need hundreds of thousands or millions of users on Bison Relay for it to substantially magnify the value proposition for Decred. Bison Relay is built to grow via word of mouth. Just the prospect of a Signal-like system without the requirement of phone number metadata and a low cost is a draw.
-- Most existing web infrastructure can be replicated on Bison Relay, e.g. pages, ecommerce, and paid subscriptions. This is a work-in-progress and there should be something to demonstrate in the next several weeks. Think bricks and mortar stores, Patreon, Substack, Soundcloud, and OnlyFans without the questionable platform fees and restrictions.
-- Bison Relay has no authoritative naming system on purpose. As soon as there is a public directory, it is not possible to attribute spam to a source. By having no phonebook in Bison Relay, the path of spamming users and spam is always attributable.
-- Decred has had difficulty obtaining substantive fiat exchange listings, so Bison Relay creates an informal way around this barrier by facilitating localized purchases of Decred, either via cash or other means.
+- 与大多数科技公司不同，我们不需要数十万或数百万的 Bison Relay 用户来大幅放大 Decred 的价值主张。Bison Relay 旨在通过口口相传来发展。只是不需要电话号码元数据且成本低的类似信号系统的前景是吸引人的。
+- 大多数现有的网络基础设施都可以在 Bison Relay 上复制，例如页面、电子商务和付费订阅。这是一项正在进行的工作，在接下来的几周内应该会有一些东西可以展示。想想没有可疑平台费用和限制的实体、Patreon、Substack、Soundcloud 和 OnlyFans。
+- Bison Relay 有意没有设置权威的命名系统。一旦有了公共目录，就不可能将垃圾邮件归因于来源。由于在 Bison Relay 中没有电话簿，垃圾邮件用户和垃圾邮件的路径总是可归因的。
+- Decred 难以获得实质性的法定交易所上市，因此 Bison Relay 通过促进本地化购买 Decred（通过现金或其他方式）来绕过这一障碍。
 
-It is difficult to capture all the various implications of Bison Relay, so feel free to communicate with us about it via [chat](https://chat.decred.org/) or other [communication channels](https://decred.org/community/).
+很难捕捉到 Bison Relay 的所有各种含义，因此请随时通过[聊天室](https://chat.decred.org/)或[其它沟通渠道](https://decred.org/community/)与我们交流。
 
-## Conclusion
+## 结论
 
-Bison Relay is a years-long effort of mine to use cryptocurrency to create a platform for free speech and free association. Back in 2017, I had idly wondered how this was possible, and 5 years later we have a working product with a nice user interface. The years since fall 2017 have been unpleasant as we soldiered forward through malicious miners manipulating our markets, persistent coordinated trolling campaigns, trade media blacklisting, and acute Twitter censorship. With the release of Bison Relay, Decred and any other individuals or groups that are being actively censored on other platforms can begin to build their own sovereign internet of content, ideas, and capital. Decred is money evolved and Bison Relay is internet evolved.
+Bison Relay 是我们多年的努力，旨在使用加密货币创建一个言论自由和自由联通的平台。早在 2017 年，我就懒洋洋地设想过，5 年后，我们有了一个具有漂亮用户界面的可用产品。自 2017 年秋季以来的这些年一直不愉快，因为我们通过恶意矿工操纵我们的市场、持续协调的拖钓活动、贸易媒体黑名单和严厉的 Twitter 审查而奋勇前进。随着 Bison Relay 的发布，Decred 和在其它平台上受到积极审查的任何其它个人或团体都可以开始建立自己的内容、思想和主权互联网。Decred 是货币进化而来的，Bison Relay 是互联网进化而来的。
 
-[Come join us on Bison Relay](https://bisonrelay.org/) and build your own sovereign internet. The revolution will not be custodial, censored, or surveilled.
+加入我们的 [Bison Relay](https://bisonrelay.org/) 并建立您自己的主权互联网。The revolution will not be custodial, censored, or surveilled.
