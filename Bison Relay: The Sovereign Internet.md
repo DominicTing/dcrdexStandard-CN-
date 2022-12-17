@@ -10,7 +10,8 @@ In reasoning outlined below, it will become clear why free speech requires this 
 
 This initial release includes both a graphical user interface (“GUI”) client for Windows, MacOS, and Linux and a command line interface (“CLI”) client for most platforms.
 
-Reasoning and Design
+## Reasoning and Design
+
 Bison Relay has been developed under the threat model of assuming that a powerful adversary controls major components of the infrastructure, which is standard for major Decred features, e.g. Proof-of-Stake governance, StakeShuffle privacy, or DCRDEX atomic swap exchange. A key observation that has guided the architecting of Bison Relay is that custody of user data and metadata by server operators is used to censor and surveil users, so the broad approach is to aggressively minimize the accessibility and custody of user data and metadata by server operators.
 
 The design process for Bison Relay can be described clearly by the following series of observations:
