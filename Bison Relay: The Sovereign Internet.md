@@ -1,4 +1,4 @@
-## Bison Relay: The Sovereign Internet
+# Bison Relay: The Sovereign Internet
 
 ![](img/WX20221217-131225@2x.png)
 
