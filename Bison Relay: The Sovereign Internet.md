@@ -1,6 +1,6 @@
 ## Bison Relay: The Sovereign Internet
 
-![](img/WX20221217-131002@2x.png)
+![](WX20221217-131225@2x.png)
 
 BY JAKE YOCOM-PIATT ON DECEMBER 14, 2022
 
