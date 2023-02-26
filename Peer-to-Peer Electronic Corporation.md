@@ -26,7 +26,6 @@
 ## 重新想象金钱
 
 ![](img/DALL-E-2022-08-01-17.27.55---_a-Phoenix-rising-from-the-ashes-of-a-burning-modern-bank-in-a-city_.jpg)
-
 _OpenAI 生成的“凤凰从燃烧的银行灰烬中升起”_
 
 A simple answer would be free-floating debt abstraction of a universal equivalent of measure between things, such that it enables the trade of goods between strangers who otherwise neither know nor trust each other. One of the things traded is also labor, so money also serves the function of allocating productive work. Price, on the other hand, serves as an information system to communicate supply and demand: what is in oversupply and what requires more production. Thus, money is better understood through the lens of information theory (a line of thinking that was developed in Hayek’s work).
