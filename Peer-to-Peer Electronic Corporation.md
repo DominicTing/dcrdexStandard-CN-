@@ -56,7 +56,8 @@ _OpenAI 生成的“凤凰从燃烧的银行灰烬中升起”_
 
 ## 去中心化整个生态系统
 
--“我很想说 decred 是最好的比特币” - Chris DeRose-
+> “我很想说 decred 是最好的比特币” - Chris DeRose
+
 Bitcoin exists within an ecosystem of overlapping and interwoven re-centralization tendencies whose governance and trajectory of development is driven by traditional corporate structures such as Blockstream. Practically, Bitcoin is mostly bought and traded through custodial brokers and centralized exchanges which require personal identification and passing KYC/AML procedures. That in itself in many ways defeats the purpose of what Bitcoin was meant to fulfill (as there is little point in trading a decentralized asset on centralized exchanges, except as simulating market dynamics in its legacy form). Not to disregard or diminish what Bitcoin has contributed in its pulling the distributed peer-to-peer paradigm of decentralization from the fringe and into the mainstream, but rather asking if bitcoin could be made even more bitcoin-like in line with its early day ethos.
 
 Here's a quick sketch of how the ecosystem operates in its current consortium-like form:
