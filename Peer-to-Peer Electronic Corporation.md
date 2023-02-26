@@ -4,7 +4,7 @@
 
 作者 @Tivra
 
-The early days of the Internet were magic: the possibility of an emergent global, decentralized society that transcended nation-state borders and where people could share data freely.
+### 互联网的早期是神奇的：出现一个超越民族国家边界的全球分散社会的可能性，人们可以在其中自由共享数据。
 
 It was the province of the technically savvy and academia back in those days. Up until the so-called Eternal September in the early 1990s, which pushed it to the mainstream and, as new technologies usually tend to, resulting in the dot com bubble, from which the Web 2.0 was born: today’s digital neofeudalism of Facebook, Google and Silicon Valley Big Tech.
 
