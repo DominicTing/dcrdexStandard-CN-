@@ -1,6 +1,6 @@
 # 点对点公司
 
-![](img/Peer-to-Peer Electronic Corporation 1.png)
+![](img/Peer-to-PeerElectronicCorporation1.png)
 
 作者 @Tivra
 
