@@ -115,20 +115,21 @@ Stuart J. Russell 教授在运行的“算法机器”的类比来指出他认�
 
 当我读到 Placeholder VC 的 Joel Monegro 的评论时，我首先清楚了实现这种新型组织的关键及其意义，这是一个名副其实的灵光一现的时刻（链接到他的想法的视频演示）：加密治理允许对于不仅仅是“货币”的东西的出现：它允许加密资本的出现。什么是资本？简而言之，资本是有效组织劳动力和调动生产资料以实现预期结果的力量。
 
-![](img/DALL-E-2022-08-01-17.27.55---_a-Phoenix-rising-from-the-ashes-of-a-burning-modern-bank-in-a-city_.jpg)
+![](img/Screenshot-2022-08-01-170041.jpg)
 
 
-“Separating currency and capital leads to concentration. Modern capitalism keeps currency and capital separate. Capital appreciates over time while currencies depreciate in time, leading to a massive concentration of wealth and power.” (Joel Monegro, 14:15)
-What something like Decred makes possible then is the above mentioned “superpower” of formal incentive alignment, but without having to exist within a legal framework that depends on extensive institutional bureaucracies and specialized human expertise to run it (and therefrom, being cumbersome, often inefficient and susceptible to outside influences, lobbying, human error and bias).
+> “将货币和资本分开会导致集中。现代资本主义将货币和资本分开。资本会随着时间的推移而升值，而货币会随着时间的推移而贬值，从而导致财富和权力的大规模集中。” （乔尔·莫内格罗，14:15）
 
-It’s naive to see the rigged game situation of the current economy solely in terms of “corrupt individuals” and “bad apples” - instead, the systemic reasons that condition and underlie this state of affairs much be looked at more closely. A corporation, by definition, works to optimize its “reward function”, which is usually defined in terms of quarterly profits - and as such, it has to use all the means available to it towards that goal. So, it’s only rational to employ lobbying, various ways of evading taxes, etc.
+Decred 之类的东西使上述正式激励调整的“超级大国”成为可能，但不必存在于依赖广泛的官僚机构和专门的人类专业知识来运行在它的法律框架内（因此，繁琐，通常效率低下并且容易受到外部影响、游说、人为错误和偏见的影响）。
 
-In Decred, the functions of currency (as a unit of accounting and means of exchange) and capital (as the capacity to productively organize labor) are coupled together - those working for the Decred ecosystem, for example, are paid in the system’s native token, which is also used as voting stake, allowing the holder to participate in the decision-making processes which set the course for future development. Thereby making stakeholders directly responsible for the outcomes of their choices, decisions, and actions, instead of delegating those responsibilities to a central bank, government institution or some panel of narrow experts (whose interests may not always coincide with those of the people they are expected to represent and act in the interest of and who too often do not carry the burdens of the kinds of risks they might take).
+仅从“腐败的个人”和“坏苹果”的角度来看待当前经济被操纵的游戏情况是天真的——相反，更仔细地研究制约和构成这种事态的系统性原因。根据定义，一家公司致力于优化其“奖励功能”，这通常根据季度利润来定义——因此，它必须使用所有可用的手段来实现这一目标。所以，利用游说、各种逃税方式等，才是合理的。
 
-“Separating currency and capital leads to concentration. Modern capitalism keeps currency and capital separate. Capital appreciates over time while currencies depreciate in time, leading to a massive concentration of wealth and power.” (14:15)
-While agreeing with the left-wing critique of modern-day financial capitalism and the disproportionate asymmetries of inequality it creates, the solution may lie in the coupling back of price and value, currency and capital, rather than in stricter and more crippling regulations, cumbersome bureaucracies, and increased state intervention.
+在 Decred 中，货币（作为记账单位和交换手段）和资本（作为有效组织劳动力的能力）的功能结合在一起- 例如，为 Decred 生态系统工作的人员以系统的原生代币支付报酬，该代币也用作投票，允许持有者参与为未来发展设定方向的决策过程。从而让利益相关者直接对他们的选择、决定和行动的结果负责，而不是将这些责任委托给中央银行、政府机构或一些狭隘的专家小组（他们的利益可能并不总是与他们预期的人的利益一致）代表他们的利益并为他们的利益行事，他们往往不承担他们可能承担的各种风险的负担）。
 
-“Most people live their lives in currency, and few people live their lives in the capital. Currencies tend to lose value in time, while capital tends to appreciate in time. ” (15:00)
-At the time of writing this, we are witnessing unprecedented division in society. The division is usually described as the divide between the Left and the Right, or the have and the have-not, the socialists, and the capitalists. But this battle is fought within the system that created it, instead of outside of it. This system, corporatism, will not be overcome by anarchy or by rage, but by something that is as effective, as productive (if not more) than the corporation, but without its deadlocks. It seems to me the idea of uniting currency and capital, stake and wage, and skin-in-the-game with sovereignty steps in a direction that satisfies both sides, and creates a self-directed, autonomous collective that can collaborate across borders.
+虽然同意左翼对现代金融资本主义及其造成的不成比例不对称的批评，但解决方案可能在于价格与价值、货币与资本的耦合，而不是更严格、更严厉的监管、繁琐的官僚机构，并增加国家干预。
 
-Now try to imagine how a society runs on this “operating system”, instead of the corporatist one. I feel drawn to this vision.
+> “大多数人生活在货币中，很少有人生活在首都。货币往往会随着时间贬值，而资本往往会随着时间升值。” (15:00)
+
+在撰写本文时，我们正在目睹社会前所未有的分裂。这种分裂通常被描述为左派和右派、有产者和无产者、社会主义者和资本家之间的分歧。但这场战斗是在创造它的系统之内进行的，而不是在它之外。这个系统，不会被无政府状态或愤怒所克服，而是被与公司一样有效、有生产力（如果不是更多）但没有僵局的东西所克服。在我看来，将货币与资本、股份与工资、参与游戏与主权结合起来的想法朝着双方都满意的方向迈进，并创建了一个可以跨境合作的自我导向、自治的集体。
+
+现在试着想象一个社会如何在这个“操作系统”而不是社团主义的操作系统上运行。我被这个愿景所吸引。
