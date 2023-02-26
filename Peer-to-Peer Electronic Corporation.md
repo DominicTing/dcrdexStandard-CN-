@@ -26,31 +26,37 @@
 ## 重新想象金钱
 
 ![](img/DALL-E-2022-08-01-17.27.55---_a-Phoenix-rising-from-the-ashes-of-a-burning-modern-bank-in-a-city_.jpg)
+
 _OpenAI 生成的“凤凰从燃烧的银行灰烬中升起”_
 
-A simple answer would be free-floating debt abstraction of a universal equivalent of measure between things, such that it enables the trade of goods between strangers who otherwise neither know nor trust each other. One of the things traded is also labor, so money also serves the function of allocating productive work. Price, on the other hand, serves as an information system to communicate supply and demand: what is in oversupply and what requires more production. Thus, money is better understood through the lens of information theory (a line of thinking that was developed in Hayek’s work).
+让我们稍微回顾一下：钱是什么？
 
-When the gold standard was abandoned in the early 1970s though, this debt was embodied in trust in the American economy (thus, fiat, let that be so) - which, in turn, gave the State the power to generate this debt abstraction directly at the press of a button, without there being anything to justify or back it. That way, basically borrowing from the future in betting on the repaying of that debt sometime in that murky, uncertain future. This in turn creates a hyperactive society that has to constantly expand in order to pay for the past debt in the future.
+一个简单的答案是将自由浮动的抽象债务为事物之间的普遍等价衡量标准，这样它就可以在陌生人之间进行商品交易，否则他们既不认识也不信任对方。交易的东西之一也是劳动力，因此货币也具有分配生产性工作的功能。另一方面，价格充当沟通供求关系的信息系统：什么供过于求，什么需要更多生产。因此，通过信息论（在哈耶克著作中发展起来的一种思路）的视角可以更好地理解货币。
 
-The Challenges Facing Bitcoin
-Enter Bitcoin - peer-to-peer cash with fixed, predictable supply, but not really fungible, since the ledger keeps tamper-proof audit trails of the coins - making it possible to blacklist some, and also it is often that older coins are worth more than newly minted ones. (Hence, the Bitcoin maximalist meme “1 BTC = 1 BTC” is not literally true, regardless of the seeming tautology.)
+然而，当金本位在 70 年代初期被放弃时，这种债务体现在对美国经济的信任中（因此，法定货币，就这样吧）—— 这反过来又赋予了国家直接产生这种抽象债务的权力按下按钮，没有任何理由或支持它。那样的话，基本上就是从未来借钱，押注在那个阴暗、不确定的未来的某个时候偿还那笔债务。这反过来又创造了一个过度活跃的社会，为了在未来偿还过去的债务，社会必须不断扩张。
 
-Unlike electronic fiat, however, there would be scalability issues with Bitcoin if mass adopted - not to mention the constant looking threat of mining centralization in autocratic jurisdictions such as China in the past (thus, also having a geopolitical component to it).
 
-Some cryptocurrencies have emerged in order to try to iterate on Bitcoin’s general idea, addressing some of its shortcomings: Monero, for example, is thought of as what Bitcoin was supposed to be, in the sense of how it is anonymous, untraceable, and ASIC-resistant in its “egalitarian” CPU-only Proof-of-Work.
+## 比特币面临的挑战
 
-In general, the enterprises and undertakings which developed after Bitcoin were (and still are) mostly advancing and re-purposing the general concept of the consensus-driven blockchain (e.g., Ethereum’s equipping it with a code execution environment for running more complex operations as stored in code on the blockchain itself, etc.)
+比特币 —— 具有固定、可预测供应的点对点现金，但并不真的具备可互换性，因为分类账保留硬币的防篡改审计跟踪 —— 使得将一些硬币列入黑名单成为可能，而且通常旧硬币可信度超过新铸造的。（因此，比特币极简主义模因“1 BTC = 1 BTC”从字面上看并不正确。）
 
-Attempts at iterating Bitcoin can be sorted out in a number of categories, for example:
+然而，与法定电子货币不同的是，如果大规模采用，比特币将存在可扩展性问题——更不用说过去在某些专制司法管辖区中持续出现的挖矿集中化威胁（因此，它也具有地缘政治成分）。
 
-PRIVACY: Monero, Decred, ZCash, etc. - involving sophisticated cryptographic protocols which are the ones most “cypherpunk” in nature.
-SCALABILITY: Mimblewimble (such as Grin, BEAM) - and Lightning Network
-Prevention threats presented by PoW mining centralization and cartel-forming: Monero (with ASIC-resistant RandomX), Decred’s hybrid PoW/PoS are different approaches to combat miner centralization (especially with its recent move to increase the reward ratio)
-These are all specific areas of improvement - but there are also more holistic, systemic issues that plague Bitcoin that are often overlooked by the Bitcoin community. Initially conceived of as a fully decentralized system, Bitcoin nonetheless has come to exist and operate within an ecosystem of centralized and siloed entities and services which, consequently, pose the threat of re-centralization and capture. Decred itself takes the general premise of Bitcoin in yet another direction and it constitutes a DAO of stakeholders which vote on proposals and make decisions (e.g., controlling budget and policies to make the currency more adaptable) with their stake in the system (and thus, are directly incentivized to increase their value by increasing the value of the system that secures it). Decred is designed so that it would reduce or eliminate conflicts of interest and chain-splitting hard forks by aligning the incentives and interests of network participants and actors. Decred has major aspects of governance directly baked into the protocol, strong focus on community input and sustainable funding and development in mind.
+一些加密货币的出现是为了尝试迭代比特币的总体思想，解决它的一些缺点：例如， Monero是匿名的、不可追踪的和抗ASIC。
 
-Decentralizing the Whole Ecosystem
+总的来说，在比特币之后发展起来的企业或项目大多是（并且仍然是）推进和重新利用共识驱动区块链的一般概念（例如，以太坊为其配备代码执行环境以运行存储的更复杂的操作在区块链本身的代码中，等等）
 
-“I’m tempted to say decred is the best bitcoin” - Chris DeRose
+迭代比特币的尝试可以分为许多类别，例如：
+
+- 隐私：Monero、Decred、ZCash 等 - 涉及复杂的加密协议，这些协议本质上是最“cypherpunk”的。
+- 可扩展性：Mimblewimble（例如 Grin、BEAM）和闪电网络
+- PoW 挖矿中心化和垄断形成带来的预防威胁：Monero（具有抗 ASIC 的 RandomX）、Decred 的混合 PoW/PoS 是对抗矿工中心化的不同方法（尤其是最近提高奖励率的举措）
+
+这些都是具体的改进领域 —— 但还有更全面、更系统的问题困扰着比特币，而这些问题往往被比特币社区所忽视。比特币最初被设想为一个完全去中心化的系统，但它已经存在并在一个由中心化和孤立的实体和服务组成的生态系统中运行，因此，它构成了重新中心化和被捕获的威胁。Decred 本身在另一个方向上采用了比特币的一般前提，它构成了利益相关者的 DAO，利益相关者拥有系统中的股份（因此，直接激励通过增加保护它的系统的价值来增加它们的价值）。Decred 旨在通过调整网络参与者和参与者的激励和利益来减少或消除利益冲突和硬分叉。Decred 将治理的主要方面直接纳入协议，非常注重社区投入以及可持续的资金以及未来发展。
+
+## 去中心化整个生态系统
+
+-“我很想说 decred 是最好的比特币” - Chris DeRose-
 Bitcoin exists within an ecosystem of overlapping and interwoven re-centralization tendencies whose governance and trajectory of development is driven by traditional corporate structures such as Blockstream. Practically, Bitcoin is mostly bought and traded through custodial brokers and centralized exchanges which require personal identification and passing KYC/AML procedures. That in itself in many ways defeats the purpose of what Bitcoin was meant to fulfill (as there is little point in trading a decentralized asset on centralized exchanges, except as simulating market dynamics in its legacy form). Not to disregard or diminish what Bitcoin has contributed in its pulling the distributed peer-to-peer paradigm of decentralization from the fringe and into the mainstream, but rather asking if bitcoin could be made even more bitcoin-like in line with its early day ethos.
 
 Here's a quick sketch of how the ecosystem operates in its current consortium-like form:
