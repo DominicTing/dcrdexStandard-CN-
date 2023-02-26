@@ -1,4 +1,4 @@
-# 点对点公司
+# 点对点生态系统
 
 ![](img/Peer-to-PeerElectronicCorporation1.png)
 
