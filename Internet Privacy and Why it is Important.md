@@ -1,14 +1,16 @@
-## Internet Privacy and Why it is Important
+## 互联网隐私及其重要性
 
 ![](img/image-6.png)
 
-@Blockchain Jew
+作者 @Blockchain Jew
 
-> As the internet evolves, the desire for privacy is only going to increase as more users become informed. Privacy is your human right and you need to fight for it.
+> 伴随互联网的发展，越来越多的用户对隐私的渴望只会增加。隐私是人权，你需要为之奋斗。
 
-Privacy is a fundamental human right that everyone ought to enjoy by default as it allows them to own their data and decide when to share and with whom to. Though this is common knowledge with secular tech companies, it’s sometimes neglected considering that the more data siphoned from users, the better these companies can serve users with relevant ads and the further they stand against the competition. As more end-users become aware of the risks strapped with leasing personal information to so-called “trusted third parties” (TTP), they tend to take measures to protect their privacy and ameliorate online security. Users must gain deep knowledge of privacy and understand how to protect their online identity.
+隐私是一项基本人权，每个人都应该默认享有，因为它允许他们拥有自己的数据并决定何时共享以及与谁共享。尽管这是世俗科技公司的常识，但考虑到从用户那里窃取的数据越多，这些公司就可以更好地为用户提供相关广告，并且他们在竞争中的地位也越强，因此会被忽视。随着越来越多的最终用户意识到将个人信息出租给所谓的“可信第三方”(TTP) 所带来的风险，他们倾向于采取措施保护他们的隐私并改善数字安全。用户必须深入了解隐私并了解如何保护他们的数字身份。
 
-What is Internet Privacy?
+
+## What is Internet Privacy?
+
 Internet privacy (also called online privacy) is a subset of data privacy that refers to the control an end-user has (or should have) over the flow of personal information on the internet. In context, Internet privacy is a fundamental human right that end-users are entitled to whenever they display, store or provide information regarding themselves on the internet.
 
 Why is Internet Privacy important?
