@@ -9,36 +9,42 @@
 隐私是一项基本人权，每个人都应该默认享有，因为它允许他们拥有自己的数据并决定何时共享以及与谁共享。尽管这是世俗科技公司的常识，但考虑到从用户那里窃取的数据越多，这些公司就可以更好地为用户提供相关广告，并且他们在竞争中的地位也越强，因此会被忽视。随着越来越多的最终用户意识到将个人信息出租给所谓的“可信第三方”(TTP) 所带来的风险，他们倾向于采取措施保护他们的隐私并改善数字安全。用户必须深入了解隐私并了解如何保护他们的数字身份。
 
 
-## What is Internet Privacy?
+## 什么是互联网隐私？
 
-Internet privacy (also called online privacy) is a subset of data privacy that refers to the control an end-user has (or should have) over the flow of personal information on the internet. In context, Internet privacy is a fundamental human right that end-users are entitled to whenever they display, store or provide information regarding themselves on the internet.
+互联网隐私（也称为数字隐私）是数据隐私中的一项内容，指的是最终用户拥有（或应该拥有）对互联网上个人信息流的控制。在上下文中，互联网隐私是最终用户在互联网上显示、存储或提供有关个人信息时有权享有的一项基本人权。
 
-Why is Internet Privacy important?
-Many internet users are unaware of the battle they’re up against when taking control of their personal information. What they don’t know is that there are companies dedicated to the cause of siphoning data from users over the internet, they create sophisticated software and bots that track users' activities on the internet in real-time. Privacy on the internet is becoming more difficult as every company is striving to beat the competition, and in a digital economy where data is king, these companies are left with no choice but to pierce through the veil of privacy. Therefore, internet privacy is critical in this digital age as data ownership is becoming a thug-of-war. As our activities on the internet constantly increase, important knowledge and actions on privacy need to be implemented.
 
-Common privacy mistakes made by internet users
-Allowing default privacy settings: Usually, when you install a new app on your device, it is given some default permissions automatically. Some of which may include access to Contact, Messages, Location etc. For instance, ad personalization is automatically enabled for most apps (and websites). You can always configure these permissions from your mobile device or browser, but most users neglect this, thereby exposing themselves.
+## 为什么互联网隐私很重要？
 
-Disclosing too much on social media: Truth is, social media companies are among the biggest data harvesters online. They siphon more data than you think. However, they also hold personal details that users consciously gave to them. These may include (real) name, age, location, activities etc. Sharing less information on social media aids in reducing your digital footprint. A social tool like Bison Relay saves you the burden of sharing too much information online.
+许多互联网用户并没有意识到他们在控制自己的个人信息时所面临的斗争。他们不知道的是，有些公司致力于通过互联网从用户那里窃取数据，他们创建了复杂的软件和机器人程序来实时跟踪用户在互联网上的活动。随着每家公司都在努力打败竞争对手，在数据为王的数字经济中，互联网上的隐私变得越来越困难，这些公司别无选择，只能揭开隐私的面纱。因此，围绕数据的所有权正在成为一场战争，互联网隐私在这个数字时代至关重要。随着我们在互联网上的活动不断增加，需要了解有关隐私的知识和行为。
 
-Insufficient knowledge about privacy regulations: Many users are ignorant of their privacy rights. The fact is, you can ask companies to provide the data they’ve collected from you and even demand that they delete your data from their database. Unfortunately, not every internet user is aware of the rights given to them by GDPR and other privacy legislation. Though the laws differ in each country, users should ensure that they acquire prior knowledge of their privacy rights and utilize it to the fullest.
 
-Undervaluing your data: Earlier we stated that in a digital economy, data is king. This means that with the right set of data, e-businesses and companies can stand a better chance against their competitors and maximize profit. One of the biggest mistakes internet users make is assuming that their data isn’t relevant, especially if they aren’t highly profiled individuals. While this is a reasonable excuse, the fact remains that every slice of data is valuable. Hackers swamp the internet looking for ways to hijack users' data and sell on the dark web. Likewise, legitimate companies take extensive strategies to collect users’ data. Therefore, users should take the necessary steps to protect their data.
+# 互联网用户常犯的隐私错误
+
+- 允许默认隐私设置：通常，当您在设备上安装新应用时，它会自动获得一些默认权限。其中一些可能包括访问联系人、消息、位置等。例如，大多数应用程序（和网站）会自动启用广告个性化。您始终可以从您的移动设备或浏览器配置这些权限，但大多数用户都忽略了这一点，从而暴露了自己。
+
+- 在社交媒体上披露太多信息：事实是，社交媒体公司是最大的在线数据收集者之一。他们窃取的数据比你想象的要多。但是，它们还包含用户有意识地提供给它们的个人详细信息。这些可能包括（真实）姓名、年龄、地点、活动等。在社交媒体上分享较少的信息有助于减少您的数字足迹。像Bison Relay这样的社交工具可以让你免于在网上分享太多信息的负担。
+
+- 对隐私法规的了解不足：许多用户对自己的隐私权一无所知。事实上，您可以要求公司提供他们从您那里收集的数据，甚至要求他们从数据库中删除您的数据。不幸的是，并不是每个互联网用户都知道GDPR和其它隐私立法赋予他们的权力。尽管每个国家/地区的法律不同，但用户应确保他们事先了解自己的隐私权并充分利用它。
+
+- 低估你的数据：之前我们说过，在数字经济中，数据为王。这意味着使用正确的数据集，电子商务和公司可以更好地对抗竞争对手并实现利润最大化。互联网用户犯的最大错误之一是无所谓，尤其是认为自己不是知名人士时。虽然这是一个合理的借口，但事实仍然是每一片数据都是有价值的。黑客们充斥着互联网，寻找劫持用户数据并在暗网上出售的方法。同样，合法公司会采取广泛的策略来收集用户数据。因此，用户应该采取必要的措施来保护他们的数据。
 
 ![](img/Private-internet.jpg)
 
-How to protect your privacy on the internet
-Use a private search engine: This would probably be difficult for most users, seeing that Google is the go-to search engine. The query you provide a search engine tells a lot about you and provides sufficient data to the search engine provider, using a more privacy-centric search engine like DuckDuckGo would reduce your digital footprint. DuckDuckGo uses Bing results on the back end, also, Bing integrates AI into its service, so you should expect to get a better experience using it. Other private search engines include Hulbee, Startpage, Qwant and Searx.
 
-Migrate to more private social messengers: Bison Relay is Decred’s private social platform that gratifies users’ privacy and data ownership while allowing for content monetization. Unlike regular messaging apps, you can use Bison Relay without necessarily having an account. Bison Relay protects you from irking ads, censorship, data breaches or siphoning.
+## 如何在互联网上保护您的隐私
 
-Use private browsers: Google Chrome is a popular internet browser that serves just right, but if you’re looking to maximize your internet privacy and erase your digital footprints, then opting for a private browser should be the right choice. Brave is an excellent alternative, plus, it offers a similar UI to that of Chrome. Other private browsers include Firefox, Ungoogled Chromium, Tor Browser etc.
+- 使用带有隐私属性的搜索引擎：这对大多数用户来说可能很难，因为谷歌是首选搜索引擎。你向搜索引擎提供的查询会告诉你很多关于你的信息，并向搜索引擎提供商提供足够的数据，使用像DuckDuckGo这样更以隐私为中心的搜索引擎会减少你的数字足迹。DuckDuckGo在后端使用Bing(微软)，而且 Bing将 AI 集成到其服务中，因此您应该期望使用它获得更好的体验。其他隐私搜索引擎包括Hulbee、 Startpage、 Qwant和Searx。
 
-Use a secure Virtual Private Network: Using a VPN is the best way to protect your internet privacy as it assigns you a new and secure IP address and protects your online traffic with military-grade encryption. When it comes to selecting the right VPN to use, you should do your research as you would need to trust a third party to secure your network.
+- 迁移到更私密的社交网络： Bison Relay是Decred 的隐私社交平台，它满足用户的隐私和数据所有权，同时允许内容货币化。与常规消息传递应用程序不同，您无需拥有帐户即可使用 Bison Relay。Bison Relay 保护您免受恼人的广告、审查、数据泄露。
 
-Stay informed: Information is an invaluable asset in this digital age, as the internet evolves, users must gain the right information on securing their internet privacy. A good start is joining privacy-loving communities like Techlore’s Discord. To learn more about going private, check out Seth’s article on A Step-by-Step Guide Guide to Going Private.
+- 使用隐私浏览器：谷歌浏览器是一款流行的互联网浏览器，服务恰到好处，但如果您希望最大限度地保护您的互联网隐私并清除您的数字足迹，那么选择隐私浏览器应该是正确的选择。Brave是一个很好的选择，此外，它提供了与 Chrome 类似的用户界面。其他私人浏览器包括Firefox、 Ungoogled Chromium、 Tor 浏览器等。
 
-Privacy is normal
-It’s up to users to perform due diligence in owning their data and protecting their privacy. As the internet evolves, the desire for privacy is only going to increase as more users become informed. Privacy is your human right and you need to fight for it.
+- 使用安全的虚拟专用网络：使用 VPN 是保护您的互联网隐私的最佳方式，因为它会为您分配一个新的安全 IP 地址，并使用军用级加密保护您的在线流量。在选择要使用的正确 VPN 时，您应该进行研究，因为您需要信任第三方来保护您的网络。
 
-This article is a sequel to the Twitter space hosted by Tivra on "Privacy Tools for a Sovereign Age".
+- 随时了解信息：信息是这个数字时代的宝贵资产，随着互联网的发展，用户必须获得正确的信息以保护他们的互联网隐私。一个好的开始是加入像 Techlore 的 Discord 这样热爱隐私的社区。要了解有关私有化的更多信息，请查看 Seth 关于私有化分步指南的文章。
+
+
+## 保护隐私是十分正常的行为
+
+用户有责任在拥有自己的数据和保护自己的隐私方面进行尽职调查。伴随互联网的发展，越来越多的用户对隐私的渴望只会增加。隐私是人权，你需要为之奋斗。
