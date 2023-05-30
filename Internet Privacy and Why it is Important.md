@@ -1,5 +1,7 @@
 ## Internet Privacy and Why it is Important
 
+![](img/image-6.png)
+
 @Blockchain Jew
 
 > As the internet evolves, the desire for privacy is only going to increase as more users become informed. Privacy is your human right and you need to fight for it.
@@ -21,6 +23,7 @@ Insufficient knowledge about privacy regulations: Many users are ignorant of the
 
 Undervaluing your data: Earlier we stated that in a digital economy, data is king. This means that with the right set of data, e-businesses and companies can stand a better chance against their competitors and maximize profit. One of the biggest mistakes internet users make is assuming that their data isn’t relevant, especially if they aren’t highly profiled individuals. While this is a reasonable excuse, the fact remains that every slice of data is valuable. Hackers swamp the internet looking for ways to hijack users' data and sell on the dark web. Likewise, legitimate companies take extensive strategies to collect users’ data. Therefore, users should take the necessary steps to protect their data.
 
+![](img/Private-internet.jpg)
 
 How to protect your privacy on the internet
 Use a private search engine: This would probably be difficult for most users, seeing that Google is the go-to search engine. The query you provide a search engine tells a lot about you and provides sufficient data to the search engine provider, using a more privacy-centric search engine like DuckDuckGo would reduce your digital footprint. DuckDuckGo uses Bing results on the back end, also, Bing integrates AI into its service, so you should expect to get a better experience using it. Other private search engines include Hulbee, Startpage, Qwant and Searx.
